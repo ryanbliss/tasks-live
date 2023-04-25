@@ -14,7 +14,7 @@ interface ILiveAccordionProps {
     items: ILiveAccordionItem[];
 }
 export const LiveAccordion: FC<ILiveAccordionProps> = ({ uniqueKey, items }) => {
-    const [openItem, _, setOpenItems] = useLiveState<string>(uniqueKey, "unset");
+    const [openItem, setOpenItems] = useLiveState<string>(uniqueKey, "unset");
     const handleToggle = useCallback<AccordionToggleEventHandler>(
         (_, data) => {
             const value = typeof data.value === "string" ? data.value : "unset";

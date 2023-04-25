@@ -24,9 +24,8 @@ export const LiveScrollView: FC<ILiveScrollViewProps> = ({
     style,
 }) => {
     const scrollViewRef = useRef<HTMLDivElement>(null);
-    const [state, data, setState] = useLiveState<string, IScrollData>(
+    const [state, setState] = useLiveState<IScrollData>(
         uniqueKey,
-        "scroll",
         { scrollTop: 0, scrollLeft: 0 }
     );
 
@@ -36,7 +35,7 @@ export const LiveScrollView: FC<ILiveScrollViewProps> = ({
             const scrollLeft = (event.target as any)?.scrollLeft;
             if (typeof scrollTop !== "number" || typeof scrollLeft !== "number")
                 return;
-            setState("scroll", { scrollTop, scrollLeft });
+            setState({ scrollTop, scrollLeft });
         }, 50);
         scrollViewRef.current?.addEventListener("scroll", onScrollEvent);
         return () => {
@@ -47,8 +46,8 @@ export const LiveScrollView: FC<ILiveScrollViewProps> = ({
     useEffect(() => {
         const scrollTop = scrollViewRef.current?.scrollTop;
         const scrollLeft = scrollViewRef.current?.scrollLeft;
-        const remoteScrollTop = data?.scrollTop;
-        const remoteScrollLeft = data?.scrollLeft;
+        const remoteScrollTop = state?.scrollTop;
+        const remoteScrollLeft = state?.scrollLeft;
         if (
             typeof scrollTop !== "number" ||
             typeof scrollLeft !== "number" ||
@@ -58,7 +57,7 @@ export const LiveScrollView: FC<ILiveScrollViewProps> = ({
             return;
 
         scrollViewRef.current?.scrollTo(remoteScrollLeft, remoteScrollTop);
-    }, [data?.scrollTop, data?.scrollLeft]);
+    }, [state?.scrollTop, state?.scrollLeft]);
 
     if (direction === "horizontal") {
         return (
