@@ -4,3 +4,4 @@ export * from "./navigation";
 export * from "./content";
 export * from "./input";
 export * from "./kanban";
+export * from "./modal";

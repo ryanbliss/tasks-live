@@ -9,7 +9,7 @@ import { useNavigationContext } from "../../context";
 export const BrowseHomePage: FC = () => {
     const { navigate } = useNavigationContext();
     const onClickBoard = useCallback((board: IKanbanBoard) => {
-        const route = `${AppRoutes.teams.children.meeting.children.board}`.replace(":boardId", board.id);
+        const route = `${AppRoutes.teams.children.meeting.children.board.base}`.replace(":boardId", board.id);
         navigate(route);
     }, [navigate]);
     return (

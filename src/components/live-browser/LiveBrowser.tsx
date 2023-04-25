@@ -68,7 +68,7 @@ export const LiveBrowser: FC<ILiveBrowserProps> = ({
         );
     }
     return (
-        <NavigationProvider navigate={navigate}>
+        <NavigationProvider navigate={navigate} width={width ?? 0} height={height ?? 0}>
             <FlexColumn
                 style={{
                     width: `${width}px`,

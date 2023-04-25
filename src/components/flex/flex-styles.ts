@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 import { makeStyles, tokens } from "@fluentui/react-components";
 
 /** Send Flex style options via FlexColumn or FlexRow props */
@@ -16,6 +16,7 @@ export type FlexOptions = {
   transparent?: boolean; // refactor for other background colors
   vAlign?: "start" | "center" | "end";
   scroll?: boolean;
+  onClick?: MouseEventHandler;
 };
 
 export const getFlexRowStyles = makeStyles({

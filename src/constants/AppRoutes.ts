@@ -11,7 +11,12 @@ export const AppRoutes = {
                 children: {
                     home: TEAMS_BASE_ROUTE + "/meeting/",
                     about: TEAMS_BASE_ROUTE + "/meeting/about",
-                    board: TEAMS_BASE_ROUTE + "/meeting/board/:boardId",
+                    board: {
+                        base: TEAMS_BASE_ROUTE + "/meeting/board/:boardId",
+                        children: {
+                            task: TEAMS_BASE_ROUTE + "/meeting/board/:boardId/task/:taskId",
+                        },
+                    },
                 },
             },
             sidePanel: TEAMS_BASE_ROUTE + "/side-panel",

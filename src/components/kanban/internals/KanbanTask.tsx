@@ -1,9 +1,11 @@
-import { FC, useCallback, useState } from "react";
+import { FC, useState } from "react";
 import { IKanbanBoard, ITask } from "../../../interfaces";
 import {
     Button,
     Card,
     Menu,
+    MenuGroup,
+    MenuGroupHeader,
     MenuItem,
     MenuList,
     MenuPopover,
@@ -12,6 +14,7 @@ import {
 import { MoreHorizontal24Regular } from "@fluentui/react-icons";
 import { FlexRow } from "../../flex";
 import { useNavigationContext } from "../../../context";
+import { AppRoutes } from "../../../constants";
 
 interface IKanbanTaskProps {
     board: IKanbanBoard;
@@ -22,9 +25,14 @@ interface IKanbanTaskProps {
 export const KanbanTask: FC<IKanbanTaskProps> = ({ board, task, setTask }) => {
     const [mouseOver, setMouseOver] = useState(false);
     const { navigate } = useNavigationContext();
-    const openTask = useCallback(() => {
-        //
-    }, [task, navigate]);
+    const openTask = () => {
+        console.log("open task");
+        const route =
+            `${AppRoutes.teams.children.meeting.children.board.children.task}`
+                .replace(":boardId", board.id)
+                .replace(":taskId", task.id);
+        navigate(route);
+    };
     return (
         <Card
             onMouseEnter={() => {
@@ -51,6 +59,9 @@ export const KanbanTask: FC<IKanbanTaskProps> = ({ board, task, setTask }) => {
                             }
                             title="More"
                             appearance="subtle"
+                            onClick={(ev) => {
+                                ev.stopPropagation();
+                            }}
                         />
                     </MenuTrigger>
                     <MenuPopover>
@@ -61,23 +72,29 @@ export const KanbanTask: FC<IKanbanTaskProps> = ({ board, task, setTask }) => {
                                 </MenuTrigger>
                                 <MenuPopover>
                                     <MenuList>
-                                        {board.columns.map((column) => (
-                                            <MenuItem
-                                                key={`menu-item-column/${column.id}`}
-                                                disabled={
-                                                    column.id === task.columnId
-                                                }
-                                                onClick={() => {
-                                                    const newTask: ITask = {
-                                                        ...task,
-                                                        columnId: column.id,
-                                                    };
-                                                    setTask(newTask);
-                                                }}
-                                            >
-                                                {column.title}
-                                            </MenuItem>
-                                        ))}
+                                        <MenuGroup>
+                                            <MenuGroupHeader>
+                                                {"Move to..."}
+                                            </MenuGroupHeader>
+                                            {board.columns.map((column) => (
+                                                <MenuItem
+                                                    key={`menu-item-column/${column.id}`}
+                                                    disabled={
+                                                        column.id ===
+                                                        task.columnId
+                                                    }
+                                                    onClick={() => {
+                                                        const newTask: ITask = {
+                                                            ...task,
+                                                            columnId: column.id,
+                                                        };
+                                                        setTask(newTask);
+                                                    }}
+                                                >
+                                                    {column.title}
+                                                </MenuItem>
+                                            ))}
+                                        </MenuGroup>
                                     </MenuList>
                                 </MenuPopover>
                             </Menu>

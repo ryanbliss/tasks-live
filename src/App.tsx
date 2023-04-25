@@ -58,10 +58,17 @@ function App() {
                             <Route
                                 path={
                                     AppRoutes.teams.children.meeting.children
-                                        .board
+                                        .board.base
                                 }
                                 element={<BrowseKanbanBoardPage />}
-                            />
+                            >
+                                <Route
+                                    path={
+                                        AppRoutes.teams.children.meeting.children
+                                            .board.children.task
+                                    }
+                                />
+                            </Route>
                         </Route>
                     </Route>
                 </Routes>

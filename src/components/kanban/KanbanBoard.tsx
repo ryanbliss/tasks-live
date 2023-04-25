@@ -3,6 +3,8 @@ import { IKanbanBoard, ITask } from "../../interfaces";
 import { FlexColumn, FlexRow } from "../flex";
 import { KanbanColumn } from "./internals/KanbanColumn";
 import { useSharedMap } from "@microsoft/live-share-react";
+import { useParams } from "react-router-dom";
+import { KanbanTaskModal } from "./internals/KanbanTaskModal";
 
 interface IKanbanBoardProps {
     board: IKanbanBoard;
@@ -17,6 +19,7 @@ function boardTasksToMap(board: IKanbanBoard): Map<string, ITask> {
 }
 
 export const KanbanBoard: FC<IKanbanBoardProps> = memo(({ board }) => {
+    const { taskId } = useParams<{ taskId?: string }>();
     const {
         map,
         setEntry,
@@ -35,19 +38,24 @@ export const KanbanBoard: FC<IKanbanBoardProps> = memo(({ board }) => {
     }, [setEntry]);
 
     return (
-        <FlexRow fill="both" style={{ paddingRight: "24px" }}>
-            {board.columns.map((column) => (
-                <FlexColumn
-                    key={column.id}
-                    style={{
-                        marginTop: "24px",
-                        marginBottom: "24px",
-                        marginLeft: "24px",
-                    }}
-                >
-                    <KanbanColumn board={liveBoard} column={column} setTask={setTask} />
-                </FlexColumn>
-            ))}
-        </FlexRow>
+        <>
+            <FlexRow fill="both" style={{ paddingRight: "24px" }}>
+                {board.columns.map((column) => (
+                    <FlexColumn
+                        key={column.id}
+                        style={{
+                            marginTop: "24px",
+                            marginBottom: "24px",
+                            marginLeft: "24px",
+                        }}
+                    >
+                        <KanbanColumn board={liveBoard} column={column} setTask={setTask} />
+                    </FlexColumn>
+                ))}
+            </FlexRow>
+            {taskId && (
+                <KanbanTaskModal task={board.tasks.find((task) => task.id === taskId)} board={board} />
+            )}
+        </>
     );
 });

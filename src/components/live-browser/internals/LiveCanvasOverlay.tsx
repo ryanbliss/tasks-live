@@ -87,7 +87,7 @@ export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
                     top: 0,
                     height: `${height}px`,
                     width: `${width}px`,
-                    zIndex: 1,
+                    zIndex: 2,
                     pointerEvents: penActive ? "auto" : "none",
                     backgroundColor: "transparent",
                 }}
@@ -99,7 +99,7 @@ export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
                     bottom: "8px",
                     left: "8px",
                     position: "fixed",
-                    zIndex: 2,
+                    zIndex: 3,
                     borderRadius: "4px",
                 }}
             >
