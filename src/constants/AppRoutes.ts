@@ -10,7 +10,6 @@ export const AppRoutes = {
                 base: TEAMS_BASE_ROUTE + "/meeting",
                 children: {
                     home: TEAMS_BASE_ROUTE + "/meeting/",
-                    about: TEAMS_BASE_ROUTE + "/meeting/about",
                     board: {
                         base: TEAMS_BASE_ROUTE + "/meeting/board/:boardId",
                         children: {

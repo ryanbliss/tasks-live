@@ -1,7 +1,6 @@
 import { useLivePresence } from "@microsoft/live-share-react";
 import { PresenceState } from "@microsoft/live-share";
 import { FC } from "react";
-import { getRandomName } from "../../../utils";
 import { AvatarGroup, AvatarGroupItem, AvatarGroupPopover, partitionAvatarGroupItems } from "@fluentui/react-components";
 import { LOCAL_RANDOM_NAME } from "../../../constants";
 

@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { IKanbanBoard, IKanbanColumn, ITask } from "../../../interfaces";
-import { FlexColumn, FlexRow } from "../../flex";
+import { FlexColumn } from "../../flex";
 import { tokens } from "@fluentui/react-theme";
 import { LiveScrollView } from "../../live-browser/internals";
-import { Card, Subtitle2 } from "@fluentui/react-components";
+import { Subtitle2 } from "@fluentui/react-components";
 import { KanbanTask } from "./KanbanTask";
 
 interface IKanbanColumnProps {
