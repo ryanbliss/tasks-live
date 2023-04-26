@@ -3,10 +3,9 @@ import { PresenceState } from "@microsoft/live-share";
 import { FC } from "react";
 import { getRandomName } from "../../../utils";
 import { AvatarGroup, AvatarGroupItem, AvatarGroupPopover, partitionAvatarGroupItems } from "@fluentui/react-components";
+import { LOCAL_RANDOM_NAME } from "../../../constants";
 
 interface ILiveAvatarsProps {}
-
-const LOCAL_RANDOM_NAME = getRandomName();
 
 export const LiveAvatars: FC<ILiveAvatarsProps> = () => {
     // TODO: remove custom display name once new presence changes are in

@@ -1,26 +1,25 @@
 import { useLiveCanvas, useSharedState } from "@microsoft/live-share-react";
 import { InkingTool, PointerInputProvider } from "@microsoft/live-share-canvas";
-import { FC, useRef, useEffect, useState, MutableRefObject } from "react";
+import { FC, useRef, useEffect, MutableRefObject } from "react";
 import { Button, tokens } from "@fluentui/react-components";
 import { NonClickablePointerInputProvider } from "../../../utils";
 import { FlexRow } from "../../flex";
+import { LOCAL_RANDOM_NAME } from "../../../constants";
 
 interface ILiveCanvasOverlayProps {
-    displayName: string;
     width: number;
     height: number;
     hostRef: MutableRefObject<HTMLElement | null>;
 }
 
 export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
-    displayName,
     width,
     height,
     hostRef,
 }) => {
     const canvasRef = useRef<HTMLDivElement>(null);
     const [penActive, setPenActive] = useSharedState("pen-active", false);
-    const { inkingManager, liveCanvas } = useLiveCanvas(
+    const { inkingManager } = useLiveCanvas(
         "live-canvas",
         canvasRef,
         true,
@@ -31,7 +30,7 @@ export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
         "topLeft",
         true,
         {
-            displayName,
+            displayName: LOCAL_RANDOM_NAME,
         },
     );
     useEffect(() => {
@@ -65,20 +64,13 @@ export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
         };
     }, [inkingManager, hostRef, penActive, hOffset, vOffset]);
 
-    useEffect(() => {
-        // TODO: this should be handled inside of the `useLiveCanvas` hook, but there is a bug...so this handles that.
-        if (!liveCanvas) return;
-        liveCanvas.onGetLocalUserInfo = () => ({
-            displayName,
-        });
-    }, [displayName, liveCanvas]);
-
     return (
         <>
             <div
                 ref={canvasRef}
                 style={{
                     position: "absolute",
+                    // These were used when trying to center page, didn't work well but might be worth revisiting
                     // left: `${hOffset}px`,
                     // right: `${hOffset}px`,
                     // top: `${vOffset}px`,

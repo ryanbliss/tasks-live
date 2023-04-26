@@ -11,7 +11,7 @@ const host: ILiveShareHost = IN_TEAMS
 export const TeamsMeetingStagePage: FC = () => {
     return (
         <LiveShareWrapper host={host}>
-            <LiveBrowser displayName={"Placeholder"} routePrefix={AppRoutes.teams.children.meeting.base} />
+            <LiveBrowser routePrefix={AppRoutes.teams.children.meeting.base} />
         </LiveShareWrapper>
     );
 };

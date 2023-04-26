@@ -13,7 +13,6 @@ import {
     TeamsPage,
     TeamsSidePanelPage,
     BrowseHomePage,
-    BrowseAboutPage,
     BrowseKanbanBoardPage,
 } from "./pages";
 
@@ -47,13 +46,6 @@ function App() {
                                         .home
                                 }
                                 element={<BrowseHomePage />}
-                            />
-                            <Route
-                                path={
-                                    AppRoutes.teams.children.meeting.children
-                                        .about
-                                }
-                                element={<BrowseAboutPage />}
                             />
                             <Route
                                 path={

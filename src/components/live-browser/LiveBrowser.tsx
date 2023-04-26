@@ -13,12 +13,10 @@ import debounce from "lodash.debounce";
 import { NavigationProvider } from "../../context";
 
 interface ILiveBrowserProps {
-    displayName: string;
     routePrefix: string;
 }
 
 export const LiveBrowser: FC<ILiveBrowserProps> = ({
-    displayName,
     routePrefix,
 }) => {
     const browserContainerRef = useRef<HTMLDivElement | null>(null);
@@ -78,7 +76,6 @@ export const LiveBrowser: FC<ILiveBrowserProps> = ({
                 ref={browserContainerRef}
             >
                 <LiveCanvasOverlay
-                    displayName={displayName}
                     width={width ?? 0}
                     height={height ?? 0}
                     hostRef={browserContainerRef}
