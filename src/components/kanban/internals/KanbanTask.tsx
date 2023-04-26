@@ -26,7 +26,6 @@ export const KanbanTask: FC<IKanbanTaskProps> = ({ board, task, setTask }) => {
     const [mouseOver, setMouseOver] = useState(false);
     const { navigate } = useNavigationContext();
     const openTask = () => {
-        console.log("open task");
         const route =
             `${AppRoutes.teams.children.meeting.children.board.children.task}`
                 .replace(":boardId", board.id)
@@ -66,38 +65,27 @@ export const KanbanTask: FC<IKanbanTaskProps> = ({ board, task, setTask }) => {
                     </MenuTrigger>
                     <MenuPopover>
                         <MenuList>
-                            <Menu>
-                                <MenuTrigger>
-                                    <MenuItem>{"Move to"}</MenuItem>
-                                </MenuTrigger>
-                                <MenuPopover>
-                                    <MenuList>
-                                        <MenuGroup>
-                                            <MenuGroupHeader>
-                                                {"Move to..."}
-                                            </MenuGroupHeader>
-                                            {board.columns.map((column) => (
-                                                <MenuItem
-                                                    key={`menu-item-column/${column.id}`}
-                                                    disabled={
-                                                        column.id ===
-                                                        task.columnId
-                                                    }
-                                                    onClick={() => {
-                                                        const newTask: ITask = {
-                                                            ...task,
-                                                            columnId: column.id,
-                                                        };
-                                                        setTask(newTask);
-                                                    }}
-                                                >
-                                                    {column.title}
-                                                </MenuItem>
-                                            ))}
-                                        </MenuGroup>
-                                    </MenuList>
-                                </MenuPopover>
-                            </Menu>
+                            <MenuGroup>
+                                <MenuGroupHeader>
+                                    {"Move to..."}
+                                </MenuGroupHeader>
+                                {board.columns.map((column) => (
+                                    <MenuItem
+                                        key={`menu-item-column/${column.id}`}
+                                        disabled={column.id === task.columnId}
+                                        onClick={(ev) => {
+                                            ev.stopPropagation();
+                                            const newTask: ITask = {
+                                                ...task,
+                                                columnId: column.id,
+                                            };
+                                            setTask(newTask);
+                                        }}
+                                    >
+                                        {column.title}
+                                    </MenuItem>
+                                ))}
+                            </MenuGroup>
                         </MenuList>
                     </MenuPopover>
                 </Menu>

@@ -67,6 +67,7 @@ function App() {
                                         AppRoutes.teams.children.meeting.children
                                             .board.children.task
                                     }
+                                    element={<></>}
                                 />
                             </Route>
                         </Route>

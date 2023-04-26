@@ -23,6 +23,8 @@ export const KanbanColumn: FC<IKanbanColumnProps> = ({ board, column, setTask })
                 paddingLeft: "16px",
                 paddingRight: "16px",
                 backgroundColor: tokens.colorNeutralBackground4,
+                borderRadius: "8px",
+                boxShadow: tokens.shadow16,
             }}
             gap="smaller"
         >
