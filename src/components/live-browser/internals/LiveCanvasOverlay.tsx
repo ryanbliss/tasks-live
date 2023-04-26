@@ -1,10 +1,11 @@
-import { useLiveCanvas, useSharedState } from "@microsoft/live-share-react";
+import { useLiveCanvas, useLiveState } from "@microsoft/live-share-react";
 import { InkingTool, PointerInputProvider } from "@microsoft/live-share-canvas";
 import { FC, useRef, useEffect, MutableRefObject } from "react";
 import { Button, tokens } from "@fluentui/react-components";
 import { NonClickablePointerInputProvider } from "../../../utils";
 import { FlexRow } from "../../flex";
 import { LOCAL_RANDOM_NAME } from "../../../constants";
+import { InkingControls } from "./InkingControls";
 
 interface ILiveCanvasOverlayProps {
     width: number;
@@ -18,7 +19,10 @@ export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
     hostRef,
 }) => {
     const canvasRef = useRef<HTMLDivElement>(null);
-    const [penActive, setPenActive] = useSharedState("pen-active", false);
+    const [inkingActive, setInkingActive] = useLiveState(
+        "inking-active",
+        false
+    );
     const { inkingManager } = useLiveCanvas(
         "live-canvas",
         canvasRef,
@@ -31,7 +35,7 @@ export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
         true,
         {
             displayName: LOCAL_RANDOM_NAME,
-        },
+        }
     );
     useEffect(() => {
         canvasRef.current!.onclick = (e) => {
@@ -48,7 +52,7 @@ export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
     useEffect(() => {
         const hostElement = hostRef?.current;
         if (!inkingManager || !hostElement) return;
-        const inputProvider = penActive
+        const inputProvider = inkingActive
             ? new PointerInputProvider(
                   canvasRef!.current!.getElementsByTagName("canvas")[0]
               )
@@ -62,7 +66,7 @@ export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
         return () => {
             inputProvider.deactivate();
         };
-    }, [inkingManager, hostRef, penActive, hOffset, vOffset]);
+    }, [inkingManager, hostRef, inkingActive, hOffset, vOffset]);
 
     return (
         <>
@@ -80,37 +84,48 @@ export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
                     height: `${height}px`,
                     width: `${width}px`,
                     zIndex: 2,
-                    pointerEvents: penActive ? "auto" : "none",
+                    pointerEvents: inkingActive ? "auto" : "none",
                     backgroundColor: "transparent",
                 }}
             />
-            <FlexRow
+            <FlexRow hAlign="center"
                 style={{
-                    padding: "4px",
-                    backgroundColor: tokens.colorBrandBackground2,
-                    bottom: "8px",
-                    left: "8px",
+                    bottom: "24px",
+                    left: 0,
+                    width: `${width}px`,
                     position: "fixed",
                     zIndex: 3,
                     borderRadius: "4px",
+                    shadow: tokens.shadow28,
+                    pointerEvents: "none",
                 }}
             >
-                <Button
-                    appearance="subtle"
-                    onClick={() => {
-                        setPenActive(!penActive);
+                <FlexRow
+                    style={{
+                        padding: "4px",
+                        backgroundColor: tokens.colorNeutralBackground6,
+                        borderRadius: "4px",
+                        shadow: tokens.shadow28,
+                        pointerEvents: "auto",
                     }}
                 >
-                    {penActive ? "Disable pen" : "Enable pen"}
-                </Button>
-                <Button
-                    appearance="subtle"
-                    onClick={() => {
-                        inkingManager?.clear();
-                    }}
-                >
-                    {"Clear"}
-                </Button>
+                    {inkingManager && (
+                        <InkingControls
+                            inkingManager={inkingManager}
+                            isEnabled={inkingActive}
+                            setIsEnabled={setInkingActive}
+                        />
+                    )}
+                    <Button
+                        appearance="subtle"
+                        size="small"
+                        onClick={() => {
+                            inkingManager?.clear();
+                        }}
+                    >
+                        {"Clear"}
+                    </Button>
+                </FlexRow>
             </FlexRow>
         </>
     );
