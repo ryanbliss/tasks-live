@@ -1,15 +1,11 @@
 import { FC, memo, useCallback, useMemo } from "react";
-import { IKanbanBoard, ITask, IUserData } from "../../interfaces";
+import { IKanbanBoard, ITask } from "../../interfaces";
 import { FlexColumn, FlexRow } from "../flex";
 import { KanbanColumn } from "./internals/KanbanColumn";
-import {
-    useLivePresence,
-    useLiveState,
-    useSharedMap,
-} from "@microsoft/live-share-react";
+import { useSharedMap } from "@microsoft/live-share-react";
 import { useParams } from "react-router-dom";
 import { KanbanTaskModal } from "./internals/KanbanTaskModal";
-import { LOCAL_RANDOM_NAME } from "../../constants";
+import { useCustomPresence, useLiveAssignedToFilter } from "../../hooks";
 
 interface IKanbanBoardProps {
     board: IKanbanBoard;
@@ -25,18 +21,13 @@ function boardTasksToMap(board: IKanbanBoard): Map<string, ITask> {
 
 export const KanbanBoard: FC<IKanbanBoardProps> = memo(({ board }) => {
     const { taskId } = useParams<{ taskId?: string }>();
-    const { map, setEntry, deleteEntry } = useSharedMap(
+    const { map, setEntry } = useSharedMap(
         `tasks/${board.id}`,
         boardTasksToMap(board)
     );
     // TODO: remove custom display name once new presence changes are in
-    const { allUsers } = useLivePresence<IUserData>(undefined, {
-        displayName: LOCAL_RANDOM_NAME,
-    });
-    const [assignedToFilterId] = useLiveState<string>(
-        "assigned-to-filter",
-        "everyone"
-    );
+    const { allUsers } = useCustomPresence();
+    const [assignedToFilterId] = useLiveAssignedToFilter();
 
     const liveBoard: IKanbanBoard = useMemo<IKanbanBoard>(() => {
         return {

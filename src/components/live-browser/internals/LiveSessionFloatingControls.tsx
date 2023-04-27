@@ -6,7 +6,7 @@ import { Button } from "@fluentui/react-components";
 import { InkingManager } from "@microsoft/live-share-canvas";
 import { PresenceUser } from "../../../interfaces";
 import { DropdownInput } from "../../input";
-import { useLiveState } from "@microsoft/live-share-react";
+import { useLiveAssignedToFilter } from "../../../hooks";
 
 interface ILiveSessionFloatingControlsProps {
     width: number;
@@ -19,10 +19,7 @@ interface ILiveSessionFloatingControlsProps {
 export const LiveSessionFloatingControls: FC<
     ILiveSessionFloatingControlsProps
 > = ({ width, inkingManager, inkingActive, setInkingActive, users }) => {
-    const [assignedToFilterId, setAssignedToFilterId] = useLiveState<string>(
-        "assigned-to-filter",
-        "everyone"
-    );
+    const [assignedToFilterId, setAssignedToFilterId] = useLiveAssignedToFilter();
     const options = [
         {
             id: "everyone",

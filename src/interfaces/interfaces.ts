@@ -22,6 +22,8 @@ export interface ITask {
 // TODO: remove once new presence changes are in
 export interface IUserData {
     displayName: string;
+    screenWidth: number;
+    screenHeight: number;
 }
 
 export type PresenceUser = LivePresenceUser<IUserData>;

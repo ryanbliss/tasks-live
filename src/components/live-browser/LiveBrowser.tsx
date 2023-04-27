@@ -1,61 +1,34 @@
 import { FC, useEffect, useRef } from "react";
 import { FlexColumn } from "../flex";
 import { Spinner, tokens } from "@fluentui/react-components";
-import {
-    useFluidObjectsContext,
-    useLivePresence,
-} from "@microsoft/live-share-react";
+import { useFluidObjectsContext } from "@microsoft/live-share-react";
 import { PresenceState } from "@microsoft/live-share";
 import { Outlet } from "react-router-dom";
 import { NavigationBar } from "../navigation";
 import { LiveCanvasOverlay, useLiveNavigate } from "./internals";
 import debounce from "lodash.debounce";
 import { NavigationProvider } from "../../context";
-import { IUserData } from "../../interfaces";
 import { LOCAL_RANDOM_NAME } from "../../constants";
+import { useCustomPresence, useCommonScreenSize } from "../../hooks";
 
 interface ILiveBrowserProps {
     routePrefix: string;
 }
 
-export const LiveBrowser: FC<ILiveBrowserProps> = ({
-    routePrefix,
-}) => {
+export const LiveBrowser: FC<ILiveBrowserProps> = ({ routePrefix }) => {
     const browserContainerRef = useRef<HTMLDivElement | null>(null);
     const { container } = useFluidObjectsContext();
     const navigate = useLiveNavigate();
 
-    const { allUsers: userClientSizes, updatePresence } = useLivePresence<{
-        width: number;
-        height: number;
-    }>(undefined, {
-        width: window.document.body.clientWidth,
-        height: window.document.body.clientHeight,
-    }, undefined, "presence-client-sizing");
-
-    const { allUsers: users } = useLivePresence<IUserData>(undefined, {
-        displayName: LOCAL_RANDOM_NAME,
-    }, undefined);
-
-    const onlineUsers = userClientSizes.filter(
-        (user) => user.state === PresenceState.online
-    );
-    const sortedWidthUsers = [...onlineUsers].sort(
-        (a, b) => (a.data?.width || 0) - (b.data?.width || 0)
-    );
-    const width =
-        sortedWidthUsers.length > 0 ? sortedWidthUsers[0].data?.width : 0;
-    const sortedHeightUsers = [...onlineUsers].sort(
-        (a, b) => (a.data?.height || 0) - (b.data?.height || 0)
-    );
-    const height =
-        sortedHeightUsers.length > 0 ? sortedHeightUsers[0].data?.height : 0;
+    const { allUsers, updatePresence } = useCustomPresence();
+    const { width, height } = useCommonScreenSize(allUsers);
 
     useEffect(() => {
         const onResize = debounce((_: Event) => {
             updatePresence(PresenceState.online, {
-                width: window.document.body.clientWidth,
-                height: window.document.body.clientHeight,
+                displayName: LOCAL_RANDOM_NAME,
+                screenWidth: window.document.body.clientWidth,
+                screenHeight: window.document.body.clientHeight,
             });
         }, 50);
         window.addEventListener("resize", onResize, true);
@@ -72,7 +45,11 @@ export const LiveBrowser: FC<ILiveBrowserProps> = ({
         );
     }
     return (
-        <NavigationProvider navigate={navigate} width={width ?? 0} height={height ?? 0}>
+        <NavigationProvider
+            navigate={navigate}
+            width={width}
+            height={height}
+        >
             <FlexColumn
                 style={{
                     width: `${width}px`,
@@ -82,12 +59,12 @@ export const LiveBrowser: FC<ILiveBrowserProps> = ({
                 ref={browserContainerRef}
             >
                 <LiveCanvasOverlay
-                    width={width ?? 0}
-                    height={height ?? 0}
+                    width={width}
+                    height={height}
                     hostRef={browserContainerRef}
-                    users={users}
+                    users={allUsers}
                 />
-                <NavigationBar routePrefix={routePrefix} users={users} />
+                <NavigationBar routePrefix={routePrefix} users={allUsers} />
                 <Outlet />
             </FlexColumn>
         </NavigationProvider>
