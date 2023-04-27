@@ -6,12 +6,14 @@ import { useParams } from "react-router-dom";
 import { useKanbanBoard } from "../../hooks";
 import { Home24Filled } from "@fluentui/react-icons";
 import { LiveAvatars } from "./internal/LiveAvatars";
+import { PresenceUser } from "../../interfaces";
 
 interface INavigationBarProps {
     routePrefix: string;
+    users: PresenceUser[];
 }
 
-export const NavigationBar: FC<INavigationBarProps> = ({ routePrefix }) => {
+export const NavigationBar: FC<INavigationBarProps> = ({ routePrefix, users }) => {
     const { boardId } = useParams<{ boardId?: string }>();
     const board = useKanbanBoard(boardId);
 
@@ -40,7 +42,7 @@ export const NavigationBar: FC<INavigationBarProps> = ({ routePrefix }) => {
                     <Subtitle2Stronger>{board.title}</Subtitle2Stronger>
                 )}
             </FlexRow>
-            <LiveAvatars />
+            <LiveAvatars users={users} />
         </FlexRow>
     );
 };

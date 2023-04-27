@@ -1,5 +1,10 @@
 import { FC } from "react";
-import { IKanbanBoard, IKanbanColumn, ITask } from "../../../interfaces";
+import {
+    IKanbanBoard,
+    IKanbanColumn,
+    ITask,
+    PresenceUser,
+} from "../../../interfaces";
 import { FlexColumn } from "../../flex";
 import { tokens } from "@fluentui/react-theme";
 import { LiveScrollView } from "../../live-browser/internals";
@@ -10,9 +15,15 @@ interface IKanbanColumnProps {
     board: IKanbanBoard;
     column: IKanbanColumn;
     setTask: (updatedTask: ITask) => void;
+    users: PresenceUser[];
 }
 
-export const KanbanColumn: FC<IKanbanColumnProps> = ({ board, column, setTask }) => {
+export const KanbanColumn: FC<IKanbanColumnProps> = ({
+    board,
+    column,
+    setTask,
+    users,
+}) => {
     const tasks = board.tasks.filter((task) => task.columnId === column.id);
     return (
         <FlexColumn
@@ -34,11 +45,29 @@ export const KanbanColumn: FC<IKanbanColumnProps> = ({ board, column, setTask })
                     uniqueKey={`scroll/${board.id}/${column.id}`}
                     fill="both"
                 >
-                    <FlexColumn name={`${column.title} tasks`} gap="small" style={{
-                        paddingBottom: "24px",
-                    }}>
+                    <FlexColumn
+                        name={`${column.title} tasks`}
+                        gap="small"
+                        style={{
+                            paddingBottom: "24px",
+                        }}
+                    >
                         {tasks.map((task) => (
-                            <KanbanTask key={task.id} board={board} task={task} setTask={setTask} />
+                            <KanbanTask
+                                key={task.id}
+                                board={board}
+                                task={task}
+                                setTask={setTask}
+                                user={
+                                    task.assignedToId
+                                        ? users.find(
+                                              (user) =>
+                                                  user.userId ===
+                                                  task.assignedToId
+                                          )
+                                        : undefined
+                                }
+                            />
                         ))}
                     </FlexColumn>
                 </LiveScrollView>

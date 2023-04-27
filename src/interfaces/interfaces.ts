@@ -1,3 +1,4 @@
+import { LivePresenceUser } from "@microsoft/live-share";
 
 export interface IKanbanBoard {
     id: string;
@@ -17,3 +18,10 @@ export interface ITask {
     columnId: string;
     assignedToId?: string;
 }
+
+// TODO: remove once new presence changes are in
+export interface IUserData {
+    displayName: string;
+}
+
+export type PresenceUser = LivePresenceUser<IUserData>;

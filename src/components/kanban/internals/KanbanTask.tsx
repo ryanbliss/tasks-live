@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
-import { IKanbanBoard, ITask } from "../../../interfaces";
+import { IKanbanBoard, ITask, PresenceUser } from "../../../interfaces";
 import {
+    Avatar,
     Button,
     Card,
     Menu,
@@ -12,7 +13,7 @@ import {
     MenuTrigger,
 } from "@fluentui/react-components";
 import { MoreHorizontal24Regular } from "@fluentui/react-icons";
-import { FlexRow } from "../../flex";
+import { FlexColumn, FlexRow } from "../../flex";
 import { useNavigationContext } from "../../../context";
 import { AppRoutes } from "../../../constants";
 
@@ -20,9 +21,15 @@ interface IKanbanTaskProps {
     board: IKanbanBoard;
     task: ITask;
     setTask: (updatedTask: ITask) => void;
+    user?: PresenceUser;
 }
 
-export const KanbanTask: FC<IKanbanTaskProps> = ({ board, task, setTask }) => {
+export const KanbanTask: FC<IKanbanTaskProps> = ({
+    board,
+    task,
+    setTask,
+    user,
+}) => {
     const [mouseOver, setMouseOver] = useState(false);
     const { navigate } = useNavigationContext();
     const openTask = () => {
@@ -43,7 +50,17 @@ export const KanbanTask: FC<IKanbanTaskProps> = ({ board, task, setTask }) => {
             onClick={openTask}
         >
             <FlexRow spaceBetween vAlign="center">
-                {task.title}
+                <FlexColumn gap="smaller">
+                    <FlexColumn>{task.title}</FlexColumn>
+                    {user?.data?.displayName && (
+                        <Avatar
+                            color="colorful"
+                            name={user.data.displayName}
+                            size={24}
+                            title={user.data.displayName}
+                        />
+                    )}
+                </FlexColumn>
                 <Menu>
                     <MenuTrigger disableButtonEnhancement>
                         <Button

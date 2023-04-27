@@ -1,22 +1,23 @@
 import { useLiveCanvas, useLiveState } from "@microsoft/live-share-react";
 import { InkingTool, PointerInputProvider } from "@microsoft/live-share-canvas";
 import { FC, useRef, useEffect, MutableRefObject } from "react";
-import { Button, tokens } from "@fluentui/react-components";
 import { NonClickablePointerInputProvider } from "../../../utils";
-import { FlexRow } from "../../flex";
 import { LOCAL_RANDOM_NAME } from "../../../constants";
-import { InkingControls } from "./InkingControls";
+import { LiveSessionFloatingControls } from "./LiveSessionFloatingControls";
+import { PresenceUser } from "../../../interfaces";
 
 interface ILiveCanvasOverlayProps {
     width: number;
     height: number;
     hostRef: MutableRefObject<HTMLElement | null>;
+    users: PresenceUser[];
 }
 
 export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
     width,
     height,
     hostRef,
+    users,
 }) => {
     const canvasRef = useRef<HTMLDivElement>(null);
     const [inkingActive, setInkingActive] = useLiveState(
@@ -88,45 +89,13 @@ export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
                     backgroundColor: "transparent",
                 }}
             />
-            <FlexRow hAlign="center"
-                style={{
-                    bottom: "24px",
-                    left: 0,
-                    width: `${width}px`,
-                    position: "fixed",
-                    zIndex: 3,
-                    borderRadius: "4px",
-                    shadow: tokens.shadow28,
-                    pointerEvents: "none",
-                }}
-            >
-                <FlexRow
-                    style={{
-                        padding: "4px",
-                        backgroundColor: tokens.colorNeutralBackground6,
-                        borderRadius: "4px",
-                        shadow: tokens.shadow28,
-                        pointerEvents: "auto",
-                    }}
-                >
-                    {inkingManager && (
-                        <InkingControls
-                            inkingManager={inkingManager}
-                            isEnabled={inkingActive}
-                            setIsEnabled={setInkingActive}
-                        />
-                    )}
-                    <Button
-                        appearance="subtle"
-                        size="small"
-                        onClick={() => {
-                            inkingManager?.clear();
-                        }}
-                    >
-                        {"Clear"}
-                    </Button>
-                </FlexRow>
-            </FlexRow>
+            <LiveSessionFloatingControls
+                width={width}
+                inkingActive={inkingActive}
+                inkingManager={inkingManager}
+                setInkingActive={setInkingActive}
+                users={users}
+            />
         </>
     );
 };

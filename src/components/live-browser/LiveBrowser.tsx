@@ -11,6 +11,8 @@ import { NavigationBar } from "../navigation";
 import { LiveCanvasOverlay, useLiveNavigate } from "./internals";
 import debounce from "lodash.debounce";
 import { NavigationProvider } from "../../context";
+import { IUserData } from "../../interfaces";
+import { LOCAL_RANDOM_NAME } from "../../constants";
 
 interface ILiveBrowserProps {
     routePrefix: string;
@@ -23,7 +25,7 @@ export const LiveBrowser: FC<ILiveBrowserProps> = ({
     const { container } = useFluidObjectsContext();
     const navigate = useLiveNavigate();
 
-    const { allUsers, updatePresence } = useLivePresence<{
+    const { allUsers: userClientSizes, updatePresence } = useLivePresence<{
         width: number;
         height: number;
     }>(undefined, {
@@ -31,7 +33,11 @@ export const LiveBrowser: FC<ILiveBrowserProps> = ({
         height: window.document.body.clientHeight,
     }, undefined, "presence-client-sizing");
 
-    const onlineUsers = allUsers.filter(
+    const { allUsers: users } = useLivePresence<IUserData>(undefined, {
+        displayName: LOCAL_RANDOM_NAME,
+    }, undefined);
+
+    const onlineUsers = userClientSizes.filter(
         (user) => user.state === PresenceState.online
     );
     const sortedWidthUsers = [...onlineUsers].sort(
@@ -79,8 +85,9 @@ export const LiveBrowser: FC<ILiveBrowserProps> = ({
                     width={width ?? 0}
                     height={height ?? 0}
                     hostRef={browserContainerRef}
+                    users={users}
                 />
-                <NavigationBar routePrefix={routePrefix} />
+                <NavigationBar routePrefix={routePrefix} users={users} />
                 <Outlet />
             </FlexColumn>
         </NavigationProvider>
