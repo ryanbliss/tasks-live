@@ -38,7 +38,7 @@
         }
     ],
     "validDomains": [
-        "*.ngrok.io"
+        "tasks-live.vercel.app"
     ],
     "authorization": {
         "permissions": {
