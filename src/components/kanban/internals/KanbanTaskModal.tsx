@@ -1,8 +1,8 @@
 import { FC, memo, useCallback } from "react";
 import { IKanbanBoard, ITask, PresenceUser } from "../../../interfaces";
-import { ModalContainer } from "../../modal";
+import { ModalContainer } from "../../common/modal";
 import { AppRoutes, LOCAL_RANDOM_NAME } from "../../../constants";
-import { DropdownInput } from "../../input";
+import { DropdownInput } from "../../common/input";
 import { useLivePresence } from "@microsoft/live-share-react";
 
 interface IKanbanTaskModalProps {

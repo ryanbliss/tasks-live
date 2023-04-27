@@ -3,13 +3,18 @@ import { useParams } from "react-router-dom";
 import { FlexColumn, KanbanBoard } from "../../components";
 import { useKanbanBoard } from "../../hooks";
 import { LiveScrollView } from "../../components/live-browser/internals";
+import { Spinner } from "@fluentui/react-components";
 
 export const BrowseKanbanBoardPage: FC = () => {
     const { boardId } = useParams<{ boardId: string }>();
     const board = useKanbanBoard(boardId);
 
     if (!board) {
-        return <FlexColumn>{"No board found for " + boardId}</FlexColumn>;
+        return (
+            <FlexColumn fill="both" vAlign="center" hAlign="center">
+                <Spinner />
+            </FlexColumn>
+        );
     }
     return (
         <FlexColumn fill="both">

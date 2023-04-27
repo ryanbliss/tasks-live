@@ -10,7 +10,7 @@ import LaserPointerIcon from "../../../assets/laser-pointer.svg";
 import PenIcon from "../../../assets/pen.svg";
 import HighlighterIcon from "../../../assets/highlighter.svg";
 import EraserIcon from "../../../assets/eraser.svg";
-import { FlexRow } from "../../flex";
+import { FlexRow } from "../../common/flex";
 import { useLiveState } from "@microsoft/live-share-react";
 
 interface InkingControlsProps {

@@ -1,5 +1,5 @@
 import { FC, ReactNode, CSSProperties, useRef, useEffect } from "react";
-import { FlexColumn, FlexItem, FlexRow } from "../../flex";
+import { FlexColumn, FlexItem, FlexRow } from "../../common/flex";
 import debounce from "lodash.debounce";
 import { useLiveState } from "@microsoft/live-share-react";
 

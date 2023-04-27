@@ -1,11 +1,10 @@
 import { FC, useEffect, useRef } from "react";
-import { FlexColumn } from "../flex";
+import { FlexColumn } from "../common/flex";
 import { Spinner, tokens } from "@fluentui/react-components";
 import { useFluidObjectsContext } from "@microsoft/live-share-react";
 import { PresenceState } from "@microsoft/live-share";
 import { Outlet } from "react-router-dom";
-import { NavigationBar } from "../navigation";
-import { LiveCanvasOverlay, useLiveNavigate } from "./internals";
+import { LiveCanvasOverlay, LiveNavigationBar, useLiveNavigate } from "./internals";
 import debounce from "lodash.debounce";
 import { NavigationProvider } from "../../context";
 import { LOCAL_RANDOM_NAME } from "../../constants";
@@ -64,7 +63,7 @@ export const LiveBrowser: FC<ILiveBrowserProps> = ({ routePrefix }) => {
                     hostRef={browserContainerRef}
                     users={allUsers}
                 />
-                <NavigationBar routePrefix={routePrefix} users={allUsers} />
+                <LiveNavigationBar routePrefix={routePrefix} users={allUsers} />
                 <Outlet />
             </FlexColumn>
         </NavigationProvider>

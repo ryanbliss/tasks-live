@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 import { FlexColumn, FlexRow } from "../flex";
 import { tokens } from "@fluentui/react-theme";
-import { useNavigationContext } from "../../context";
+import { useNavigationContext } from "../../../context";
 import { Button, Subtitle2 } from "@fluentui/react-components";
 import { DismissCircle24Filled } from "@fluentui/react-icons";
 

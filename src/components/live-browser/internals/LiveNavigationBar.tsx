@@ -1,23 +1,28 @@
 import { FC } from "react";
-import { FlexRow } from "../flex";
+import { FlexRow } from "../../common";
 import { Button, Subtitle2Stronger, tokens } from "@fluentui/react-components";
-import { useNavigationContext } from "../../context";
+import { useNavigationContext } from "../../../context";
 import { useParams } from "react-router-dom";
-import { useKanbanBoard } from "../../hooks";
+import { useKanbanBoard } from "../../../hooks";
 import { Home24Filled } from "@fluentui/react-icons";
-import { LiveAvatars } from "./internal/LiveAvatars";
-import { PresenceUser } from "../../interfaces";
+import { LiveAvatars } from "./LiveAvatars";
+import { PresenceUser } from "../../../interfaces";
 
 interface INavigationBarProps {
     routePrefix: string;
     users: PresenceUser[];
 }
 
-export const NavigationBar: FC<INavigationBarProps> = ({ routePrefix, users }) => {
+export const LiveNavigationBar: FC<INavigationBarProps> = ({ routePrefix, users }) => {
     const { boardId } = useParams<{ boardId?: string }>();
     const board = useKanbanBoard(boardId);
 
     const { navigate } = useNavigationContext();
+
+    const onNavigateHome = () => {
+        navigate(routePrefix + "/");
+    };
+
     return (
         <FlexRow
             gap="small"
@@ -34,9 +39,7 @@ export const NavigationBar: FC<INavigationBarProps> = ({ routePrefix, users }) =
                     icon={<Home24Filled />}
                     title={"Home"}
                     appearance="subtle"
-                    onClick={() => {
-                        navigate(routePrefix + "/");
-                    }}
+                    onClick={onNavigateHome}
                 />
                 {!!board && (
                     <Subtitle2Stronger>{board.title}</Subtitle2Stronger>

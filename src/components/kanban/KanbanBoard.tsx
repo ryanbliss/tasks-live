@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useMemo } from "react";
 import { IKanbanBoard, ITask } from "../../interfaces";
-import { FlexColumn, FlexRow } from "../flex";
+import { FlexColumn, FlexRow } from "../common";
 import { KanbanColumn } from "./internals/KanbanColumn";
 import { useSharedMap } from "@microsoft/live-share-react";
 import { useParams } from "react-router-dom";
@@ -25,7 +25,6 @@ export const KanbanBoard: FC<IKanbanBoardProps> = memo(({ board }) => {
         `tasks/${board.id}`,
         boardTasksToMap(board)
     );
-    // TODO: remove custom display name once new presence changes are in
     const { allUsers } = useCustomPresence();
     const [assignedToFilterId] = useLiveAssignedToFilter();
 

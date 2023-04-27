@@ -13,7 +13,7 @@ import {
     MenuTrigger,
 } from "@fluentui/react-components";
 import { MoreHorizontal24Regular } from "@fluentui/react-icons";
-import { FlexColumn, FlexRow } from "../../flex";
+import { FlexColumn, FlexRow } from "../../common/flex";
 import { useNavigationContext } from "../../../context";
 import { AppRoutes } from "../../../constants";
 

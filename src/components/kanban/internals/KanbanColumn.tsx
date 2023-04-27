@@ -5,7 +5,7 @@ import {
     ITask,
     PresenceUser,
 } from "../../../interfaces";
-import { FlexColumn } from "../../flex";
+import { FlexColumn } from "../../common/flex";
 import { tokens } from "@fluentui/react-theme";
 import { LiveScrollView } from "../../live-browser/internals";
 import { Subtitle2 } from "@fluentui/react-components";

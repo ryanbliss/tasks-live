@@ -75,11 +75,6 @@ export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
                 ref={canvasRef}
                 style={{
                     position: "absolute",
-                    // These were used when trying to center page, didn't work well but might be worth revisiting
-                    // left: `${hOffset}px`,
-                    // right: `${hOffset}px`,
-                    // top: `${vOffset}px`,
-                    // bottom: `${vOffset}px`,
                     left: 0,
                     top: 0,
                     height: `${height}px`,

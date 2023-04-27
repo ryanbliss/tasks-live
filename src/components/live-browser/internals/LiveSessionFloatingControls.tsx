@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { FlexRow } from "../../flex";
+import { FlexRow } from "../../common/flex";
 import { tokens } from "@fluentui/react-theme";
 import { InkingControls } from "./InkingControls";
 import { Button } from "@fluentui/react-components";
 import { InkingManager } from "@microsoft/live-share-canvas";
 import { PresenceUser } from "../../../interfaces";
-import { DropdownInput } from "../../input";
+import { DropdownInput } from "../../common/input";
 import { useLiveAssignedToFilter } from "../../../hooks";
 
 interface ILiveSessionFloatingControlsProps {

@@ -10,21 +10,20 @@ export const InkingControlButton: FC<{
     onSelectTool: (tool: InkingTool) => void;
     children: ReactNode;
 }> = ({ tool, selectedTool, isEnabled, onSelectTool, children }) => (
-    // TODO: change back to button
     <Button
-            appearance="transparent"
-            style={{
-                borderBottom:
-                    selectedTool === tool && isEnabled
-                        ? "2px solid red"
-                        : "2px solid transparent",
-                width: "32px",
-                minWidth: "32px",
-            }}
-            onClick={() => {
-                onSelectTool(tool);
-            }}
-        >
-            {children}
-        </Button>
+        appearance="transparent"
+        style={{
+            borderBottom:
+                selectedTool === tool && isEnabled
+                    ? "2px solid red"
+                    : "2px solid transparent",
+            width: "32px",
+            minWidth: "32px",
+        }}
+        onClick={() => {
+            onSelectTool(tool);
+        }}
+    >
+        {children}
+    </Button>
 );
