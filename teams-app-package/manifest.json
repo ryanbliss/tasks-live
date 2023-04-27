@@ -1,0 +1,66 @@
+{
+    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.12/MicrosoftTeams.schema.json",
+    "version": "1.0.1",
+    "manifestVersion": "1.12",
+    "id": "5f09338f-24f0-40d1-b4ca-da62ada63426",
+    "packageName": "com.microsoft.teams.taskslive",
+    "name": {
+        "short": "Tasks Live",
+        "full": "Tasks Live"
+    },
+    "developer": {
+        "name": "Ryan Bliss",
+        "mpnId": "",
+        "websiteUrl": "https://www.example.com",
+        "privacyUrl": "https://www.example.com/PrivacyStatement",
+        "termsOfUseUrl": "https://www.example.com/TermsOfUse"
+    },
+    "description": {
+        "short": "Live Share tasks sample app",
+        "full": "Collaborate on a sample tasks board using Teams Live Share"
+    },
+    "icons": {
+        "outline": "outline.png",
+        "color": "color.png"
+    },
+    "accentColor": "#FFFFFF",
+    "configurableTabs": [
+        {
+            "configurationUrl": "https://tasks-live.vercel.app/teams/config?inTeams=true",
+            "canUpdateConfiguration": false,
+            "scopes": [
+                "groupchat"
+            ],
+            "context": [
+                "meetingSidePanel",
+                "meetingStage"
+            ]
+        }
+    ],
+    "validDomains": [
+        "*.ngrok.io"
+    ],
+    "authorization": {
+        "permissions": {
+            "orgWide": [],
+            "resourceSpecific": [
+                {
+                    "name": "MeetingStage.Write.Chat",
+                    "type": "Delegated"
+                },
+                {
+                    "name": "ChannelMeetingStage.Write.Group",
+                    "type": "Delegated"
+                },
+                {
+                    "name": "LiveShareSession.ReadWrite.Chat",
+                    "type": "Delegated"
+                },
+                {
+                    "name": "LiveShareSession.ReadWrite.Group",
+                    "type": "Delegated"
+                }
+            ]
+        }
+    }
+}

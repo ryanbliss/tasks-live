@@ -13,7 +13,7 @@ export const TeamsConfigPage: FC = () => {
     useEffect(() => {
         pages.config.registerOnSaveHandler(function (saveEvent) {
             pages.config.setConfig({
-                suggestedDisplayName: "CoBrowse",
+                suggestedDisplayName: "Tasks Live",
                 contentUrl: `${window.location.origin}${AppRoutes.teams.children.sidePanel}?inTeams=true`,
             });
             saveEvent.notifySuccess();
@@ -25,10 +25,10 @@ export const TeamsConfigPage: FC = () => {
     return (
         <FlexColumn gap="small">
             <Title2 as="h2" block align="center">
-                Welcome to Contoso Media!
+                Welcome to Tasks Live
             </Title2>
             <Subtitle2 as="p" block align="center">
-                Press the save button to continue.
+                This is an epic sample tasks app.
             </Subtitle2>
         </FlexColumn>
     );
