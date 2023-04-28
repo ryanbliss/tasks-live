@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 import { FlexColumn, FlexRow } from "../flex";
 import { tokens } from "@fluentui/react-theme";
-import { useNavigationContext } from "../../../context";
+import { useAppContext } from "../../../context";
 import { Button, Subtitle2 } from "@fluentui/react-components";
 import { DismissCircle24Filled } from "@fluentui/react-icons";
 
@@ -16,7 +16,7 @@ export const ModalContainer: FC<IModalContainerProps> = ({
     dismissRoute,
     title,
 }) => {
-    const { width, height, navigate } = useNavigationContext();
+    const { width, height, navigate } = useAppContext();
     const onDismiss = () => {
         navigate(dismissRoute);
     };

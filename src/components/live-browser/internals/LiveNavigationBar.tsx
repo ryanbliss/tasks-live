@@ -1,23 +1,21 @@
 import { FC } from "react";
 import { FlexRow } from "../../common";
 import { Button, Subtitle2Stronger, tokens } from "@fluentui/react-components";
-import { useNavigationContext } from "../../../context";
+import { useAppContext } from "../../../context";
 import { useParams } from "react-router-dom";
 import { useKanbanBoard } from "../../../hooks";
 import { Home24Filled } from "@fluentui/react-icons";
 import { LiveAvatars } from "./LiveAvatars";
-import { PresenceUser } from "../../../interfaces";
 
 interface INavigationBarProps {
     routePrefix: string;
-    users: PresenceUser[];
 }
 
-export const LiveNavigationBar: FC<INavigationBarProps> = ({ routePrefix, users }) => {
+export const LiveNavigationBar: FC<INavigationBarProps> = ({ routePrefix }) => {
     const { boardId } = useParams<{ boardId?: string }>();
     const board = useKanbanBoard(boardId);
 
-    const { navigate } = useNavigationContext();
+    const { navigate } = useAppContext();
 
     const onNavigateHome = () => {
         navigate(routePrefix + "/");
@@ -45,7 +43,7 @@ export const LiveNavigationBar: FC<INavigationBarProps> = ({ routePrefix, users 
                     <Subtitle2Stronger>{board.title}</Subtitle2Stronger>
                 )}
             </FlexRow>
-            <LiveAvatars users={users} />
+            <LiveAvatars />
         </FlexRow>
     );
 };

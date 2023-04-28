@@ -4,10 +4,10 @@ import { LiveScrollView } from "../../components/live-browser/internals";
 import { Card, Subtitle1, Title1 } from "@fluentui/react-components";
 import { AppRoutes, HOME_PAGE_TITLE_1, KANBAN_BOARDS } from "../../constants";
 import { IKanbanBoard } from "../../interfaces";
-import { useNavigationContext } from "../../context";
+import { useAppContext } from "../../context";
 
 export const BrowseHomePage: FC = () => {
-    const { navigate } = useNavigationContext();
+    const { navigate } = useAppContext();
     const onClickBoard = useCallback((board: IKanbanBoard) => {
         const route = `${AppRoutes.teams.children.meeting.children.board.base}`.replace(":boardId", board.id);
         navigate(route);

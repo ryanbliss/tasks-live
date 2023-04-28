@@ -14,7 +14,7 @@ import {
 } from "@fluentui/react-components";
 import { MoreHorizontal24Regular } from "@fluentui/react-icons";
 import { FlexColumn, FlexRow } from "../../common/flex";
-import { useNavigationContext } from "../../../context";
+import { useAppContext } from "../../../context";
 import { AppRoutes } from "../../../constants";
 
 interface IKanbanTaskProps {
@@ -31,7 +31,7 @@ export const KanbanTask: FC<IKanbanTaskProps> = ({
     user,
 }) => {
     const [mouseOver, setMouseOver] = useState(false);
-    const { navigate } = useNavigationContext();
+    const { navigate } = useAppContext();
     const openTask = () => {
         const route =
             `${AppRoutes.teams.children.meeting.children.board.children.task}`

@@ -1,14 +1,15 @@
 import { FC, useEffect, useRef } from "react";
 import { FlexColumn } from "../common/flex";
 import { Spinner, tokens } from "@fluentui/react-components";
-import { useFluidObjectsContext } from "@microsoft/live-share-react";
+import { useFluidObjectsContext, useLivePresence } from "@microsoft/live-share-react";
 import { PresenceState } from "@microsoft/live-share";
 import { Outlet } from "react-router-dom";
 import { LiveCanvasOverlay, LiveNavigationBar, useLiveNavigate } from "./internals";
 import debounce from "lodash.debounce";
-import { NavigationProvider } from "../../context";
+import { AppContextProvider } from "../../context";
 import { LOCAL_RANDOM_NAME } from "../../constants";
-import { useCustomPresence, useCommonScreenSize } from "../../hooks";
+import { useCommonScreenSize } from "../../hooks";
+import { IUserData } from "../../interfaces";
 
 interface ILiveBrowserProps {
     routePrefix: string;
@@ -19,7 +20,12 @@ export const LiveBrowser: FC<ILiveBrowserProps> = ({ routePrefix }) => {
     const { container } = useFluidObjectsContext();
     const navigate = useLiveNavigate();
 
-    const { allUsers, updatePresence } = useCustomPresence();
+    // TODO: remove custom display name once new presence changes are in
+    const { allUsers, localUser, updatePresence } = useLivePresence<IUserData>(undefined, {
+        displayName: LOCAL_RANDOM_NAME,
+        screenWidth: window.document.body.clientWidth,
+        screenHeight: window.document.body.clientHeight,
+    });
     const { width, height } = useCommonScreenSize(allUsers);
 
     useEffect(() => {
@@ -44,10 +50,12 @@ export const LiveBrowser: FC<ILiveBrowserProps> = ({ routePrefix }) => {
         );
     }
     return (
-        <NavigationProvider
+        <AppContextProvider
             navigate={navigate}
             width={width}
             height={height}
+            allUsers={allUsers}
+            localUser={localUser}
         >
             <FlexColumn
                 style={{
@@ -58,14 +66,11 @@ export const LiveBrowser: FC<ILiveBrowserProps> = ({ routePrefix }) => {
                 ref={browserContainerRef}
             >
                 <LiveCanvasOverlay
-                    width={width}
-                    height={height}
                     hostRef={browserContainerRef}
-                    users={allUsers}
                 />
-                <LiveNavigationBar routePrefix={routePrefix} users={allUsers} />
+                <LiveNavigationBar routePrefix={routePrefix} />
                 <Outlet />
             </FlexColumn>
-        </NavigationProvider>
+        </AppContextProvider>
     );
 };

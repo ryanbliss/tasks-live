@@ -6,15 +6,14 @@ import {
     AvatarGroupPopover,
     partitionAvatarGroupItems,
 } from "@fluentui/react-components";
-import { PresenceUser } from "../../../interfaces";
+import { useAppContext } from "../../../context";
 
-interface ILiveAvatarsProps {
-    users: PresenceUser[];
-}
+interface ILiveAvatarsProps {}
 
-export const LiveAvatars: FC<ILiveAvatarsProps> = ({users}) => {
+export const LiveAvatars: FC<ILiveAvatarsProps> = () => {
+    const { allUsers } = useAppContext();
     const { inlineItems, overflowItems } = partitionAvatarGroupItems({
-        items: users
+        items: allUsers
             .filter((user) => user.data && user.state === PresenceState.online)
             .map((user) => user.data!.displayName),
     });

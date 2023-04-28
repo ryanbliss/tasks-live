@@ -4,21 +4,16 @@ import { FC, useRef, useEffect, MutableRefObject } from "react";
 import { NonClickablePointerInputProvider } from "../../../utils";
 import { LOCAL_RANDOM_NAME } from "../../../constants";
 import { LiveSessionFloatingControls } from "./LiveSessionFloatingControls";
-import { PresenceUser } from "../../../interfaces";
+import { useAppContext } from "../../../context";
 
 interface ILiveCanvasOverlayProps {
-    width: number;
-    height: number;
     hostRef: MutableRefObject<HTMLElement | null>;
-    users: PresenceUser[];
 }
 
 export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
-    width,
-    height,
     hostRef,
-    users,
 }) => {
+    const { allUsers, width, height } = useAppContext();
     const canvasRef = useRef<HTMLDivElement>(null);
     const [inkingActive, setInkingActive] = useLiveState(
         "inking-active",
@@ -89,7 +84,7 @@ export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
                 inkingActive={inkingActive}
                 inkingManager={inkingManager}
                 setInkingActive={setInkingActive}
-                users={users}
+                users={allUsers}
             />
         </>
     );

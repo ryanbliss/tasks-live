@@ -2,6 +2,9 @@ import { FC, ReactNode, CSSProperties, useRef, useEffect } from "react";
 import { FlexColumn, FlexItem, FlexRow } from "../../common/flex";
 import debounce from "lodash.debounce";
 import { useLiveState } from "@microsoft/live-share-react";
+import { LiveEvent } from "@microsoft/live-share";
+import { useAppContext } from "../../../context";
+import { useStateToRef } from "../../../hooks";
 
 interface ILiveScrollViewProps {
     uniqueKey: string;
@@ -14,6 +17,8 @@ interface ILiveScrollViewProps {
 interface IScrollData {
     scrollTop: number;
     scrollLeft: number;
+    userId?: string;
+    timestamp: number;
 }
 
 export const LiveScrollView: FC<ILiveScrollViewProps> = ({
@@ -26,22 +31,37 @@ export const LiveScrollView: FC<ILiveScrollViewProps> = ({
     const scrollViewRef = useRef<HTMLDivElement>(null);
     const [state, setState] = useLiveState<IScrollData>(
         uniqueKey,
-        { scrollTop: 0, scrollLeft: 0 }
+        { scrollTop: 0, scrollLeft: 0, timestamp: LiveEvent.getTimestamp() }
     );
+    const stateRef = useStateToRef(state);
+
+    const { localUser } = useAppContext();
 
     useEffect(() => {
-        const onScrollEvent = debounce((event: Event) => {
+        const sendScrollEvent = debounce((event: Event) => {
+            const timestamp = LiveEvent.getTimestamp();
             const scrollTop = (event.target as any)?.scrollTop;
             const scrollLeft = (event.target as any)?.scrollLeft;
             if (typeof scrollTop !== "number" || typeof scrollLeft !== "number")
                 return;
-            setState({ scrollTop, scrollLeft });
-        }, 50);
+            setState({ scrollTop, scrollLeft, timestamp, userId: localUser?.userId });
+        }, 25);
+        const onScrollEvent = (event: Event) => {
+            const timestamp = LiveEvent.getTimestamp();
+            if (stateRef.current?.userId !== localUser?.userId && timestamp - stateRef.current.timestamp <= 500) {
+                const remoteScrollTop = stateRef.current?.scrollTop ?? 0;
+                const remoteScrollLeft = stateRef.current.scrollLeft ?? 0;
+                scrollViewRef.current?.scrollTo(remoteScrollLeft, remoteScrollTop);
+                return;
+            }
+            sendScrollEvent(event);
+        };
         scrollViewRef.current?.addEventListener("scroll", onScrollEvent);
         return () => {
             scrollViewRef.current?.removeEventListener("scroll", onScrollEvent);
+            sendScrollEvent.cancel();
         };
-    }, [setState]);
+    }, [localUser?.userId, state?.userId, state?.timestamp, setState]);
 
     useEffect(() => {
         const scrollTop = scrollViewRef.current?.scrollTop;

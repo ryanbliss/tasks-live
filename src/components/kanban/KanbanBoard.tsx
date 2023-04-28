@@ -5,7 +5,8 @@ import { KanbanColumn } from "./internals/KanbanColumn";
 import { useSharedMap } from "@microsoft/live-share-react";
 import { useParams } from "react-router-dom";
 import { KanbanTaskModal } from "./internals/KanbanTaskModal";
-import { useCustomPresence, useLiveAssignedToFilter } from "../../hooks";
+import { useLiveAssignedToFilter } from "../../hooks";
+import { useAppContext } from "../../context";
 
 interface IKanbanBoardProps {
     board: IKanbanBoard;
@@ -25,7 +26,7 @@ export const KanbanBoard: FC<IKanbanBoardProps> = memo(({ board }) => {
         `tasks/${board.id}`,
         boardTasksToMap(board)
     );
-    const { allUsers } = useCustomPresence();
+    const { allUsers } = useAppContext();
     const [assignedToFilterId] = useLiveAssignedToFilter();
 
     const liveBoard: IKanbanBoard = useMemo<IKanbanBoard>(() => {
