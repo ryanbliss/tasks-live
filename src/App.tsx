@@ -72,7 +72,7 @@ function App() {
             }
         };
         initialize();
-    });
+    }, []);
 
     const appReady = (IN_TEAMS && initialized) || !IN_TEAMS;
     if (!appReady) return null;
