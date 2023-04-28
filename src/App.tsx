@@ -31,7 +31,6 @@ function App() {
         // We are monitoring the React Suspense situation closely and may revisit in the future.
         if (startedInitializingRef.current) return;
         startedInitializingRef.current = true;
-        
 
         if (!IN_TEAMS) return;
 
@@ -45,7 +44,7 @@ function App() {
                 setInitialized(true);
                 const context = await app.getContext();
                 const curTheme = context.app.theme;
-                switch(curTheme) {
+                switch (curTheme) {
                     case "dark":
                         setTeamsTheme(teamsDarkTheme);
                         break;
@@ -57,15 +56,17 @@ function App() {
                         setTeamsTheme(teamsLightTheme);
                         break;
                 }
-                app.registerOnThemeChangeHandler((theme: string | undefined) => {
-                    if (theme == "dark") {
-                        setTeamsTheme(teamsDarkTheme);
-                    } else if (theme == "contrast") {
-                        setTeamsTheme(teamsHighContrastTheme);
-                    } else {
-                        setTeamsTheme(teamsLightTheme);
+                app.registerOnThemeChangeHandler(
+                    (theme: string | undefined) => {
+                        if (theme == "dark") {
+                            setTeamsTheme(teamsDarkTheme);
+                        } else if (theme == "contrast") {
+                            setTeamsTheme(teamsHighContrastTheme);
+                        } else {
+                            setTeamsTheme(teamsLightTheme);
+                        }
                     }
-                });
+                );
             } catch (error) {
                 console.error(error);
             }
@@ -115,8 +116,8 @@ function App() {
                             >
                                 <Route
                                     path={
-                                        AppRoutes.teams.children.meeting.children
-                                            .board.children.task
+                                        AppRoutes.teams.children.meeting
+                                            .children.board.children.task
                                     }
                                     element={<></>}
                                 />
