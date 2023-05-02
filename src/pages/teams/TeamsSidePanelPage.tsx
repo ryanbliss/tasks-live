@@ -1,5 +1,5 @@
 import { FC, useCallback } from "react";
-import { FlexColumn, FlexItem } from "../../components";
+import { FlexColumn, FlexItem, FlexRow } from "../../components";
 import { Button, Card, Subtitle1, Title3 } from "@fluentui/react-components";
 import { meeting } from "@microsoft/teams-js";
 import {
@@ -51,11 +51,13 @@ export const TeamsSidePanelPage: FC = () => {
                             >
                                 <FlexColumn gap="small">
                                     <Subtitle1>{board.title}</Subtitle1>
-                                    <Button size="small" onClick={() => {
-                                        onClickShareToMeeting(board);
-                                    }}>
-                                        {"Share in meeting"}
-                                    </Button>
+                                    <FlexRow>
+                                        <Button size="small" onClick={() => {
+                                            onClickShareToMeeting(board);
+                                        }}>
+                                            {"Share in meeting"}
+                                        </Button>
+                                    </FlexRow>
                                 </FlexColumn>
                             </Card>
                         ))}
