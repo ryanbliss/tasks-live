@@ -1,7 +1,7 @@
 {
     "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.12/MicrosoftTeams.schema.json",
     "version": "1.0.1",
-    "manifestVersion": "1.12",
+    "manifestVersion": "1.16",
     "id": "5f09338f-24f0-40d1-b4ca-da62ada63426",
     "packageName": "com.microsoft.teams.taskslive",
     "name": {
@@ -28,18 +28,23 @@
         {
             "configurationUrl": "https://tasks-live.vercel.app/teams/config?fluidEnv=teams",
             "canUpdateConfiguration": false,
-            "scopes": [
-                "groupchat"
-            ],
+            "scopes": ["groupchat"],
+            "context": ["meetingSidePanel", "meetingStage"]
+        }
+    ],
+    "staticTabs": [
+        {
+            "entityId": "homeTab",
+            "scopes": ["team", "groupchat"],
             "context": [
                 "meetingSidePanel",
                 "meetingStage"
-            ]
+            ],
+            "name": "Tasks Live",
+            "contentUrl": "https://tasks-live.vercel.app/teams/side-panel?fluidEnv=teams"
         }
     ],
-    "validDomains": [
-        "tasks-live.vercel.app"
-    ],
+    "validDomains": ["tasks-live.vercel.app"],
     "authorization": {
         "permissions": {
             "orgWide": [],

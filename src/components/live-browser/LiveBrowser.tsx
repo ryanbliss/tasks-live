@@ -20,8 +20,8 @@ export const LiveBrowser: FC<ILiveBrowserProps> = ({ routePrefix }) => {
     const { container } = useFluidObjectsContext();
     const navigate = useLiveNavigate();
 
-    // TODO: remove custom display name once new presence changes are in
     const { allUsers, localUser, updatePresence } = useLivePresence<IUserData>(undefined, {
+        // TODO: remove custom display name once new presence changes are in
         displayName: LOCAL_RANDOM_NAME,
         screenWidth: window.document.body.clientWidth,
         screenHeight: window.document.body.clientHeight,
