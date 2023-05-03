@@ -101,7 +101,7 @@ export class NonClickablePointerInputProvider extends InputProvider {
         this.element.removeEventListener("pointerleave", this.onPointerLeave);
     }
 
-    constructor(readonly element: HTMLElement, readonly hOffset: number, readonly vOffset: number) {
+    constructor(readonly element: HTMLElement) {
         super();
     }
 }

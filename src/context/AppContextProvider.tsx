@@ -3,8 +3,8 @@ import { PresenceUser } from "../interfaces";
 
 interface IAppContextProviderProps {
     navigate: (route: string) => void;
-    width: number;
-    height: number;
+    commonWidth: number;
+    commonHeight: number;
     allUsers: PresenceUser[];
     localUser: PresenceUser | undefined;
     children?: ReactNode;
@@ -12,8 +12,8 @@ interface IAppContextProviderProps {
 
 export const AppContextProvider: FC<IAppContextProviderProps> = ({
     children,
-    width,
-    height,
+    commonWidth,
+    commonHeight,
     allUsers,
     localUser,
     navigate,
@@ -22,8 +22,8 @@ export const AppContextProvider: FC<IAppContextProviderProps> = ({
         <AppContext.Provider
             value={{
                 navigate,
-                width,
-                height,
+                commonWidth,
+                commonHeight,
                 allUsers,
                 localUser,
             }}
@@ -35,8 +35,8 @@ export const AppContextProvider: FC<IAppContextProviderProps> = ({
 
 interface IAppContext {
     navigate: (route: string) => void;
-    width: number;
-    height: number;
+    commonWidth: number;
+    commonHeight: number;
     allUsers: PresenceUser[];
     localUser: PresenceUser | undefined;
 }

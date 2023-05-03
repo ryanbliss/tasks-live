@@ -22,8 +22,12 @@ export const LiveBrowser: FC = () => {
         screenWidth: window.document.body.clientWidth,
         screenHeight: window.document.body.clientHeight,
     });
-    const { width, height } = useCommonScreenSize(allUsers);
+    // Calculates the lowest common denominator for screen widths & heights for all users in session.
+    // This helps us ensure that cursors, strokes, and scroll views are positioned correctly for all users.
+    const { commonWidth, commonHeight } = useCommonScreenSize(allUsers);
 
+    // Effect to broadcast changes to local user's screen size whenever the window is resized.
+    // That then updates the allUsers list, which causes `useCommonScreenSize` to refresh.
     useEffect(() => {
         const onResize = debounce((_: Event) => {
             updatePresence(PresenceState.online, {
@@ -35,9 +39,11 @@ export const LiveBrowser: FC = () => {
         window.addEventListener("resize", onResize, true);
         return () => {
             window.removeEventListener("resize", onResize, true);
+            onResize.cancel();
         };
     }, [updatePresence]);
 
+    // If we have not yet joined the session container, we show a loading spinner
     if (!container) {
         return (
             <FlexColumn fill="both" vAlign="center" hAlign="center">
@@ -45,24 +51,25 @@ export const LiveBrowser: FC = () => {
             </FlexColumn>
         );
     }
+    // Otherwise, we render the LiveBrowser contents
     return (
         <AppContextProvider
             navigate={navigate}
-            width={width}
-            height={height}
+            commonWidth={commonWidth}
+            commonHeight={commonHeight}
             allUsers={allUsers}
             localUser={localUser}
         >
             <FlexColumn
                 style={{
-                    width: `${width}px`,
-                    height: `${height}px`,
+                    width: `${commonWidth}px`,
+                    height: `${commonHeight}px`,
                     backgroundColor: tokens.colorNeutralBackground1,
                 }}
                 ref={browserContainerRef}
             >
                 <LiveCanvasOverlay
-                    hostRef={browserContainerRef}
+                    pointerElementRef={browserContainerRef}
                 />
                 <LiveNavigationBar />
                 <Outlet />

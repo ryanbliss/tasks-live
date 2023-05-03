@@ -10,6 +10,9 @@ import { useAppContext } from "../../../context";
 
 interface ILiveAvatarsProps {}
 
+/**
+ * Shows the online user avatars in a Live Share session
+ */
 export const LiveAvatars: FC<ILiveAvatarsProps> = () => {
     const { allUsers } = useAppContext();
     const { inlineItems, overflowItems } = partitionAvatarGroupItems({
