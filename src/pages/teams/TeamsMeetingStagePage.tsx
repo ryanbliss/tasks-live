@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { AppRoutes, IN_TEAMS } from "../../constants";
+import { IN_TEAMS } from "../../constants";
 import { TestLiveShareHost, ILiveShareHost } from "@microsoft/live-share";
 import { LiveShareHost } from "@microsoft/teams-js";
 import { LiveBrowser } from "../../components/live-browser";
@@ -11,7 +11,7 @@ export const TeamsMeetingStagePage: FC = () => {
     );
     return (
         <LiveShareProvider host={host} joinOnLoad>
-            <LiveBrowser routePrefix={AppRoutes.teams.children.meeting.base} />
+            <LiveBrowser />
         </LiveShareProvider>
     );
 };

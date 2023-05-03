@@ -7,18 +7,14 @@ import { useKanbanBoard } from "../../../hooks";
 import { Home24Filled } from "@fluentui/react-icons";
 import { LiveAvatars } from "./LiveAvatars";
 
-interface INavigationBarProps {
-    routePrefix: string;
-}
-
-export const LiveNavigationBar: FC<INavigationBarProps> = ({ routePrefix }) => {
+export const LiveNavigationBar: FC = () => {
     const { boardId } = useParams<{ boardId?: string }>();
     const board = useKanbanBoard(boardId);
 
     const { navigate } = useAppContext();
 
     const onNavigateHome = () => {
-        navigate(routePrefix + "/");
+        navigate("/teams/meeting/");
     };
 
     return (

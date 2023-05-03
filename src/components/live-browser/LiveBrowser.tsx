@@ -11,11 +11,7 @@ import { LOCAL_RANDOM_NAME } from "../../constants";
 import { useCommonScreenSize } from "../../hooks";
 import { IUserData } from "../../interfaces";
 
-interface ILiveBrowserProps {
-    routePrefix: string;
-}
-
-export const LiveBrowser: FC<ILiveBrowserProps> = ({ routePrefix }) => {
+export const LiveBrowser: FC = () => {
     const browserContainerRef = useRef<HTMLDivElement | null>(null);
     const { container } = useFluidObjectsContext();
     const navigate = useLiveNavigate();
@@ -68,7 +64,7 @@ export const LiveBrowser: FC<ILiveBrowserProps> = ({ routePrefix }) => {
                 <LiveCanvasOverlay
                     hostRef={browserContainerRef}
                 />
-                <LiveNavigationBar routePrefix={routePrefix} />
+                <LiveNavigationBar />
                 <Outlet />
             </FlexColumn>
         </AppContextProvider>

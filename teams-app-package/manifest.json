@@ -24,14 +24,6 @@
         "color": "color.png"
     },
     "accentColor": "#FFFFFF",
-    "configurableTabs": [
-        {
-            "configurationUrl": "https://tasks-live.vercel.app/teams/config?fluidEnv=teams",
-            "canUpdateConfiguration": false,
-            "scopes": ["groupchat"],
-            "context": ["meetingSidePanel", "meetingStage"]
-        }
-    ],
     "staticTabs": [
         {
             "entityId": "homeTab",
