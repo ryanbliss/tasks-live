@@ -2,12 +2,10 @@ import { FC, useEffect, useRef } from "react";
 import { FlexColumn } from "../common/flex";
 import { Spinner, tokens } from "@fluentui/react-components";
 import { useFluidObjectsContext, useLivePresence } from "@microsoft/live-share-react";
-import { PresenceState } from "@microsoft/live-share";
 import { Outlet } from "react-router-dom";
 import { LiveCanvasOverlay, LiveNavigationBar, useLiveNavigate } from "./internals";
 import debounce from "lodash.debounce";
 import { AppContextProvider } from "../../context";
-import { LOCAL_RANDOM_NAME } from "../../constants";
 import { useCommonScreenSize } from "../../hooks";
 import { IUserData } from "../../interfaces";
 
@@ -16,9 +14,7 @@ export const LiveBrowser: FC = () => {
     const { container } = useFluidObjectsContext();
     const navigate = useLiveNavigate();
 
-    const { allUsers, localUser, updatePresence } = useLivePresence<IUserData>(undefined, {
-        // TODO: remove custom display name once new presence changes are in
-        displayName: LOCAL_RANDOM_NAME,
+    const { allUsers, localUser, updatePresence } = useLivePresence<IUserData>({
         screenWidth: window.document.body.clientWidth,
         screenHeight: window.document.body.clientHeight,
     });
@@ -30,8 +26,7 @@ export const LiveBrowser: FC = () => {
     // That then updates the allUsers list, which causes `useCommonScreenSize` to refresh.
     useEffect(() => {
         const onResize = debounce((_: Event) => {
-            updatePresence(PresenceState.online, {
-                displayName: LOCAL_RANDOM_NAME,
+            updatePresence({
                 screenWidth: window.document.body.clientWidth,
                 screenHeight: window.document.body.clientHeight,
             });

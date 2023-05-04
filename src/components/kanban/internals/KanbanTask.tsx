@@ -52,12 +52,12 @@ export const KanbanTask: FC<IKanbanTaskProps> = ({
             <FlexRow spaceBetween vAlign="center">
                 <FlexColumn gap="smaller">
                     <FlexColumn>{task.title}</FlexColumn>
-                    {user?.data?.displayName && (
+                    {user?.displayName && (
                         <Avatar
                             color="colorful"
-                            name={user.data.displayName}
+                            name={user.displayName}
                             size={24}
-                            title={user.data.displayName}
+                            title={user.displayName}
                         />
                     )}
                 </FlexColumn>

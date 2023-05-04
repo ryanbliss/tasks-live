@@ -19,9 +19,7 @@ export interface ITask {
     assignedToId?: string;
 }
 
-// TODO: remove once new presence changes are in
 export interface IUserData {
-    displayName: string;
     screenWidth: number;
     screenHeight: number;
 }

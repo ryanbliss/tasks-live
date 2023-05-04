@@ -44,7 +44,7 @@ export const KanbanTaskModal: FC<IKanbanTaskModalProps> = memo(
         }
         const options = users.map((user) => ({
             id: user.userId,
-            displayText: user.data?.displayName ?? "",
+            displayText: user?.displayName ?? "",
         }));
         return (
             <ModalContainer dismissRoute={dismissRoute} title={task.title}>

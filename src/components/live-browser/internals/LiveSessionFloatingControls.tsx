@@ -27,7 +27,7 @@ export const LiveSessionFloatingControls: FC<
         },
         ...users.map((user) => ({
             id: user.userId,
-            displayText: user.data?.displayName ?? "",
+            displayText: user?.displayName ?? "",
         })),
     ];
 

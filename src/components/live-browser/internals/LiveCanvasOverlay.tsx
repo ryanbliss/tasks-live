@@ -26,10 +26,6 @@ export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
         undefined, // scale. We don't change this in this sample, though it would be a good idea since users can zoom in/out on browser.
         "topLeft", // referencePoint. We always have our app positioned in topLeft corner of screen.
         true, // isCursorShared
-        // TODO: remove once new SDK version is published
-        {
-            displayName: LOCAL_RANDOM_NAME,
-        }
     );
 
     useEffect(() => {
