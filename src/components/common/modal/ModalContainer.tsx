@@ -40,6 +40,7 @@ export const ModalContainer: FC<IModalContainerProps> = ({
                     padding: "24px",
                     backgroundColor: tokens.colorNeutralBackground1,
                     borderRadius: "8px",
+                    width: "80%",
                 }}
                 onClick={(ev) => {
                     ev.stopPropagation();

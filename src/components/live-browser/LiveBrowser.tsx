@@ -1,14 +1,21 @@
 import { FC, useEffect, useRef } from "react";
 import { FlexColumn } from "../common/flex";
 import { Spinner, tokens } from "@fluentui/react-components";
-import { useFluidObjectsContext, useLivePresence } from "@microsoft/live-share-react";
-import { Outlet } from "react-router-dom";
-import { LiveCanvasOverlay, LiveNavigationBar, useLiveNavigate } from "./internals";
+import {
+    useFluidObjectsContext,
+    useLivePresence,
+    useLiveState,
+} from "@microsoft/live-share-react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { LiveCanvasOverlay, LiveNavigationBar } from "./internals";
 import debounce from "lodash.debounce";
 import { AppContextProvider } from "../../context";
-import { useCommonScreenSize } from "../../hooks";
-import { IUserData } from "../../interfaces";
+import { IUserData, PresenceUser } from "../../interfaces";
+import { PresenceState } from "@microsoft/live-share";
 
+/**
+ * Live browser that wraps any page within it to do things like synchronize scroll position and maintain a common viewport.
+ */
 export const LiveBrowser: FC = () => {
     const browserContainerRef = useRef<HTMLDivElement | null>(null);
     const { container } = useFluidObjectsContext();
@@ -63,12 +70,68 @@ export const LiveBrowser: FC = () => {
                 }}
                 ref={browserContainerRef}
             >
-                <LiveCanvasOverlay
-                    pointerElementRef={browserContainerRef}
-                />
+                <LiveCanvasOverlay pointerElementRef={browserContainerRef} />
                 <LiveNavigationBar />
                 <Outlet />
             </FlexColumn>
         </AppContextProvider>
     );
+};
+
+/**
+ * Sets up a synchronized router for everyone in a Live Share session.
+ * @returns navigate callback for when you want to change the remote route for everyone in a Live Share session.
+ */
+const useLiveNavigate = (): ((route: string) => void) => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [remoteRoute, setRemoteRoute] = useLiveState<string>(
+        "ROUTE_KEY",
+        location.pathname
+    );
+
+    // When the remote route changes, navigate to that route locally
+    useEffect(() => {
+        if (!remoteRoute || location.pathname === remoteRoute) return;
+        navigate(remoteRoute + window.location.hash ?? "");
+    }, [remoteRoute, navigate]);
+
+    return setRemoteRoute;
+};
+
+/**
+ * React hook that calculates the lowest-common denominator width & height for all online users.
+ * For a production scenario, you might consider highest common denominator or using width of the presenter.
+ * This seemed to be a good compromise for this demo.
+ *
+ * @param allUsers users in the Live Share session
+ * @returns common width and height that all users will be able to fit within the visible screen
+ */
+const useCommonScreenSize = (
+    allUsers: PresenceUser[]
+): {
+    commonWidth: number;
+    commonHeight: number;
+} => {
+    const onlineUsers = allUsers.filter(
+        (user) => user.state === PresenceState.online
+    );
+    const sortedWidthUsers = [...onlineUsers].sort(
+        (a, b) => (a.data?.screenWidth || 0) - (b.data?.screenWidth || 0)
+    );
+    const width =
+        sortedWidthUsers.length > 0
+            ? sortedWidthUsers[0].data?.screenWidth
+            : window.document.body.clientWidth;
+    const sortedHeightUsers = [...onlineUsers].sort(
+        (a, b) => (a.data?.screenHeight || 0) - (b.data?.screenHeight || 0)
+    );
+    const height =
+        sortedHeightUsers.length > 0
+            ? sortedHeightUsers[0].data?.screenHeight
+            : window.document.body.clientHeight;
+    return {
+        commonWidth: width ?? window.document.body.clientWidth,
+        commonHeight: height ?? window.document.body.clientHeight,
+    };
 };

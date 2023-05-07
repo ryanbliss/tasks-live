@@ -30,8 +30,11 @@ export const KanbanTask: FC<IKanbanTaskProps> = ({
     setTask,
     user,
 }) => {
+    // While hovering over the card, we show an overflow menu
     const [mouseOver, setMouseOver] = useState(false);
     const { navigate } = useAppContext();
+
+    // Callback to open the task in a modal
     const openTask = () => {
         const route =
             `${AppRoutes.teams.children.meeting.children.board.children.task}`
@@ -39,6 +42,15 @@ export const KanbanTask: FC<IKanbanTaskProps> = ({
                 .replace(":taskId", task.id);
         navigate(route);
     };
+
+    // Callback to reassign a task to a new column in the kanban board.
+    const onChangeTaskColumn = (columnId: string) => {
+        const newTask: ITask = {
+            ...task,
+            columnId: columnId,
+        };
+        setTask(newTask);
+    }
     return (
         <Card
             onMouseEnter={() => {
@@ -92,11 +104,7 @@ export const KanbanTask: FC<IKanbanTaskProps> = ({
                                         disabled={column.id === task.columnId}
                                         onClick={(ev) => {
                                             ev.stopPropagation();
-                                            const newTask: ITask = {
-                                                ...task,
-                                                columnId: column.id,
-                                            };
-                                            setTask(newTask);
+                                            onChangeTaskColumn(column.id);
                                         }}
                                     >
                                         {column.title}

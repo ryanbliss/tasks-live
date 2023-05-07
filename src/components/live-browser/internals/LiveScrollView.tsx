@@ -32,7 +32,11 @@ export const LiveScrollView: FC<ILiveScrollViewProps> = ({
     // Tracks the remote scroll position, when the change occurred, and which user last made the change
     const [remoteScrollData, setRemoteScrollData] = useLiveState<IScrollData>(
         uniqueKey,
-        { scrollTop: 0, scrollLeft: 0, timestamp: LiveShareClient.getTimestamp() }
+        {
+            scrollTop: 0,
+            scrollLeft: 0,
+            timestamp: LiveShareClient.getTimestamp(),
+        }
     );
     // Wraps the remote scroll data into React.useRef, so it can easily be accessed in JS event listeners
     const remoteScrollDataRef = useStateToRef(remoteScrollData);
@@ -49,17 +53,31 @@ export const LiveScrollView: FC<ILiveScrollViewProps> = ({
             const scrollLeft = (event.target as any)?.scrollLeft;
             if (typeof scrollTop !== "number" || typeof scrollLeft !== "number")
                 return;
-            setRemoteScrollData({ scrollTop, scrollLeft, timestamp, userId: localUser?.userId });
+            setRemoteScrollData({
+                scrollTop,
+                scrollLeft,
+                timestamp,
+                userId: localUser?.userId,
+            });
         }, 25);
         const onScrollEvent = (event: Event) => {
             const timestamp = LiveShareClient.getTimestamp();
             // If the local user is trying to scroll on this view while another user has recently scrolled, we scroll back to the remote scroll position.
-            if (remoteScrollDataRef.current?.userId !== localUser?.userId && timestamp - remoteScrollDataRef.current.timestamp <= 500) {
-                const remoteScrollTop = remoteScrollDataRef.current?.scrollTop ?? 0;
-                const remoteScrollLeft = remoteScrollDataRef.current.scrollLeft ?? 0;
-                scrollViewRef.current?.scrollTo(remoteScrollLeft, remoteScrollTop);
+            if (
+                remoteScrollDataRef.current?.userId !== localUser?.userId &&
+                timestamp - remoteScrollDataRef.current.timestamp <= 500
+            ) {
+                const remoteScrollTop =
+                    remoteScrollDataRef.current?.scrollTop ?? 0;
+                const remoteScrollLeft =
+                    remoteScrollDataRef.current.scrollLeft ?? 0;
+                scrollViewRef.current?.scrollTo(
+                    remoteScrollLeft,
+                    remoteScrollTop
+                );
                 return;
             }
+            // Send the scroll event to remote users (debounced)
             sendScrollEvent(event);
         };
         scrollViewRef.current?.addEventListener("scroll", onScrollEvent);
@@ -68,7 +86,12 @@ export const LiveScrollView: FC<ILiveScrollViewProps> = ({
             scrollViewRef.current?.removeEventListener("scroll", onScrollEvent);
             sendScrollEvent.cancel();
         };
-    }, [localUser?.userId, remoteScrollData?.userId, remoteScrollData?.timestamp, setRemoteScrollData]);
+    }, [
+        localUser?.userId,
+        remoteScrollData?.userId,
+        remoteScrollData?.timestamp,
+        setRemoteScrollData,
+    ]);
 
     // When the remote scroll position has changed and it is different than the local scroll position, we scroll to that position.
     useEffect(() => {
@@ -77,10 +100,9 @@ export const LiveScrollView: FC<ILiveScrollViewProps> = ({
         const remoteScrollTop = remoteScrollData?.scrollTop;
         const remoteScrollLeft = remoteScrollData?.scrollLeft;
         if (
-            typeof scrollTop !== "number" ||
-            typeof scrollLeft !== "number" ||
-            typeof remoteScrollTop !== "number" ||
-            typeof remoteScrollLeft !== "number"
+            ![scrollTop, scrollLeft, remoteScrollTop, remoteScrollLeft].every(
+                (value) => typeof value === "number"
+            )
         )
             return;
 
@@ -89,28 +111,18 @@ export const LiveScrollView: FC<ILiveScrollViewProps> = ({
 
     if (direction === "horizontal") {
         return (
-            <FlexRow
-                fill={fill}
-                ref={scrollViewRef}
-                scroll
-                style={style}
-                name="LiveScrollView"
-            >
+            <FlexRow fill={fill} ref={scrollViewRef} scroll style={style}>
                 <FlexItem noShrink>
-                    <FlexRow name="InnerLiveScrollView" fill="height">{children}</FlexRow>
+                    <FlexRow name="InnerLiveScrollView" fill="height">
+                        {children}
+                    </FlexRow>
                 </FlexItem>
             </FlexRow>
         );
     }
 
     return (
-        <FlexColumn
-            fill={fill}
-            ref={scrollViewRef}
-            scroll
-            style={style}
-            name="LiveScrollView"
-        >
+        <FlexColumn fill={fill} ref={scrollViewRef} scroll style={style}>
             <FlexItem noShrink>
                 <FlexColumn name="InnerLiveScrollView">{children}</FlexColumn>
             </FlexItem>

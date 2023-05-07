@@ -18,6 +18,14 @@ const KANBAN_BOARD_1: IKanbanBoard = {
         },
         {
             id: "770c6b92-9149-40cc-8141-5668d6420396",
+            title: "Testing",
+        },
+        {
+            id: "28deea91-d99e-436e-97b7-985b79fccc80",
+            title: "Rolling out",
+        },
+        {
+            id: "ba11e126-a4b8-4994-887f-f1273c03d1be",
             title: "Done",
         },
     ],
@@ -117,6 +125,256 @@ const KANBAN_BOARD_1: IKanbanBoard = {
             title: "Deploy containerized application",
             columnId: "3c228c74-2f5d-4a4e-a661-81a0e0cccb72",
         },
+        {
+            id: "da728407-542d-446a-a4c1-4aa4ba93c0d4",
+            title: "Implement OAuth2 authentication",
+            columnId: "dcf49641-e238-4d45-95ce-c431fab146e0",
+        },
+        {
+            id: "a14d88d6-5c9e-4cf1-8c7a-5d5b53c5b5f8",
+            title: "Develop backend REST API",
+            columnId: "dcf49641-e238-4d45-95ce-c431fab146e0",
+        },
+        {
+            id: "f63a6b97-bc25-4f98-a1b3-63f74c5276f8",
+            title: "Refactor CSS stylesheets",
+            columnId: "3c228c74-2f5d-4a4e-a661-81a0e0cccb72",
+        },
+        {
+            id: "0f4d4c03-1ec4-4b4d-a848-f9829429e5f5",
+            title: "Create automated test scripts",
+            columnId: "3c228c74-2f5d-4a4e-a661-81a0e0cccb72",
+        },
+        {
+            id: "240f7f63-6dc9-4e85-b98c-03b3a3b45208",
+            title: "Implement web sockets for real-time communication",
+            columnId: "dcf49641-e238-4d45-95ce-c431fab146e0",
+        },
+        {
+            id: "76e77d8d-9fcb-4d6e-a699-43d8d1debf36",
+            title: "Optimize rendering performance",
+            columnId: "3c228c74-2f5d-4a4e-a661-81a0e0cccb72",
+        },
+        {
+            id: "3a3b266c-1e8b-4372-8822-eb12cf51f843",
+            title: "Implement A/B testing",
+            columnId: "dfa2212b-1fef-4fa0-8e62-0001f1ef5985",
+        },
+        {
+            id: "b5a5bce3-c3cf-4e6b-9e22-d2ba4e16e327",
+            title: "Develop data migration plan",
+            columnId: "770c6b92-9149-40cc-8141-5668d6420396",
+        },
+        {
+            id: "4c4e4b4d-4e27-4a2e-92f1-3f3d52c9cf2e",
+            title: "Integrate payment gateway",
+            columnId: "dfa2212b-1fef-4fa0-8e62-0001f1ef5985",
+        },
+        {
+            id: "38f04b77-7a2a-42d8-a7a1-32d56e7d37b8",
+            title: "Write user documentation",
+            columnId: "770c6b92-9149-40cc-8141-5668d6420396",
+        },
+        {
+            id: "1e9d8c07-442-449a-82fc-550d8d8e27b1",
+            title: "Develop cross-platform mobile app",
+            columnId: "dfa2212b-1fef-4fa0-8e62-0001f1ef5985",
+        },
+        {
+            id: "a6e5f651-41ed-4f3e-94a6-510b5387dfe4",
+            title: "Refactor data model",
+            columnId: "770c6b92-9149-40cc-8141-5668d6420396",
+        },
+        {
+            id: "238b3a3b-406e-44f6-ae33-7dcad0c4e256",
+            title: "Set up content delivery network",
+            columnId: "3c228c74-2f5d-4a4e-a661-81a0e0cccb72",
+        },
+        {
+            id: "24a2d2eb-9e20-4696-a59e-839d874a0e8d",
+            title: "Create user acceptance test plan",
+            columnId: "dcf49641-e238-4d45-95ce-c431fab146e0",
+        },
+        {
+            id: "de9a202d-3f0a-4f69-bb1a-b5553a5c6e74",
+            title: "Implement geolocation tracking",
+            columnId: "dfa2212b-1fef-4fa0-8e62-0001f1ef5985",
+        },
+        {
+            id: "5be6e8d6-c714-40ab-93a1-67c1d50a2c17",
+            title: "Design and implement RESTful API",
+            columnId: "dcf49641-e238-4d45-95ce-c431fab146e0",
+        },
+        {
+            id: "2c7f904e-508d-4e89-8ce7-7ccdf238f48e",
+            title: "Create wireframes for new feature",
+            columnId: "dfa2212b-1fef-4fa0-8e62-0001f1ef5985",
+        },
+        {
+            id: "1b47d463-75da-4a71-9a9a-839d46b314c7",
+            title: "Refactor database schema",
+            columnId: "770c6b92-9149-40cc-8141-5668d6420396",
+        },
+        {
+            id: "e38f9967-7d1a-48d9-8791-2028810f7e74",
+            title: "Create user personas",
+            columnId: "dfa2212b-1fef-4fa0-8e62-0001f1ef5985",
+        },
+        {
+            id: "66b8c9c9-6f5c-4c38-bb5d-0475fbad4ef4",
+            title: "Optimize search algorithm",
+            columnId: "3c228c74-2f5d-4a4e-a661-81a0e0cccb72",
+        },
+        {
+            id: "c09d12e8-98d2-4cd5-b77f-d72bf0d9a9e1",
+            title: "Create system architecture diagram",
+            columnId: "dcf49641-e238-4d45-95ce-c431fab146e0",
+        },
+        {
+            id: "1a1a81e7-c15d-4c5a-b97e-5ce2f79e4b4d",
+            title: "Refactor authentication module",
+            columnId: "3c228c74-2f5d-4a4e-a661-81a0e0cccb72",
+        },
+        {
+            id: "9648616a-7dcf-4276-b02c-338b74a98a7f",
+            title: "Create integration test plan",
+            columnId: "dcf49641-e238-4d45-95ce-c431fab146e0",
+        },
+        {
+            id: "e28fcb23-6db9-46d1-84b9-6e41c6b8d285",
+            title: "Optimize image loading speed",
+            columnId: "3c228c74-2f5d-4a4e-a661-81a0e0cccb72",
+        },
+        {
+            id: "4e12f4c1-53f8-4bda-8cd4-97cbb2c4b3f4",
+            title: "Implement push notifications",
+            columnId: "dfa2212b-1fef-4fa0-8e62-0001f1ef5985",
+        },
+        {
+            id: "d2e6f862-6f92-4e45-86f1-84c44b568938",
+            title: "Write automated deployment script",
+            columnId: "3c228c74-2f5d-4a4e-a661-81a0e0cccb72",
+        },
+        {
+            id: "da88d8da-1e20-41c1-af62-019660a8a9cb",
+            title: "Create user feedback survey",
+            columnId: "dfa2212b-1fef-4fa0-8e62-0001f1ef5985",
+        },
+        {
+            id: "ec121a5a-d81b-44f3-9cc9-19304ba37d81",
+            title: "Optimize page load times",
+            columnId: "3c228c74-2f5d-4a4e-a661-81a0e0cccb72",
+        },
+        {
+            id: "bb87cafa-20ce-40b7-af63-79fc69e55f2a",
+            title: "Create user acceptance test scripts",
+            columnId: "dcf49641-e238-4d45-95ce-c431fab146e0",
+        },
+        {
+            id: "f3563109-7209-4b2c-a25c-53f92c8a85f3",
+            title: "Implement load balancer for web servers",
+            columnId: "3c228c74-2f5d-4a4e-a661-81a0e0cccb72",
+        },
+        {
+            id: "c72f5847-82f0-4397-82c5-cfa68543e8ce",
+            title: "Design and implement chat feature",
+            columnId: "dfa2212b-1fef-4fa0-8e62-0001f1ef5985",
+        },
+        {
+            "id": "1f4af538-8a05-4d69-bd62-7f2c4fa8d22c",
+            "title": "Refactor user authentication flow",
+            "columnId": "28deea91-d99e-436e-97b7-985b79fccc80"
+          },
+          {
+            "id": "be2bae09-b0e8-42c8-96dd-becac9a9cb47",
+            "title": "Create user onboarding tutorial",
+            "columnId": "28deea91-d99e-436e-97b7-985b79fccc80"
+          },
+          {
+            "id": "fc23ec37-2838-4b4c-af28-d1dd4c0e8dbd",
+            "title": "Implement real-time chat feature",
+            "columnId": "28deea91-d99e-436e-97b7-985b79fccc80"
+          },
+          {
+            "id": "b7a2d2ab-1d54-4c31-bc57-9a0319fb3c60",
+            "title": "Write unit tests for notification system",
+            "columnId": "28deea91-d99e-436e-97b7-985b79fccc80"
+          },
+          {
+            "id": "22e2f304-7859-4460-8760-585b44743a0e",
+            "title": "Create dashboard for monitoring system metrics",
+            "columnId": "28deea91-d99e-436e-97b7-985b79fccc80"
+          },
+          {
+            "id": "0688dd5d-c84d-43de-89a1-2fb919b76d29",
+            "title": "Refactor user profile page",
+            "columnId": "28deea91-d99e-436e-97b7-985b79fccc80"
+          },
+          {
+            "id": "dd12d178-369e-4a6a-9f15-d7b2af3a4c4e",
+            "title": "Create user feedback form",
+            "columnId": "28deea91-d99e-436e-97b7-985b79fccc80"
+          },
+          {
+            "id": "690321f8-026f-4a1a-95c5-5e8d5c5b5ed5",
+            "title": "Optimize database indexing",
+            "columnId": "28deea91-d99e-436e-97b7-985b79fccc80"
+          },
+          {
+            "id": "72ec0f95-df8d-4a90-9de9-1a0a2dcff2b5",
+            "title": "Implement user role-based access control",
+            "columnId": "28deea91-d99e-436e-97b7-985b79fccc80"
+          },
+          {
+            "id": "9cfecad6-3894-4e26-ae01-6a2d6e70e6c2",
+            "title": "Create user survey",
+            "columnId": "28deea91-d99e-436e-97b7-985b79fccc80"
+          },
+          {
+            "id": "d95a4c4f-f4de-4e1a-907d-3c1d3a3eb3d3",
+            "title": "Create API documentation",
+            "columnId": "ba11e126-a4b8-4994-887f-f1273c03d1be"
+          },
+          {
+            "id": "e5d6d44e-9f9c-4c15-a994-01abf8028bb8",
+            "title": "Optimize search feature",
+            "columnId": "ba11e126-a4b8-4994-887f-f1273c03d1be"
+          },
+          {
+            "id": "3433e48b-697f-4416-bc53-2ca59c7f283d",
+            "title": "Implement support for multiple languages",
+            "columnId": "ba11e126-a4b8-4994-887f-f1273c03d1be"
+          },
+          {
+            "id": "2f54b25d-4e92-4f4e-85b4-04d4da008b51",
+            "title": "Create user feedback form",
+            "columnId": "ba11e126-a4b8-4994-887f-f1273c03d1be"
+          },
+          {
+            "id": "e1a45a63-fd31-416c-9fc9-d33a891a68a9",
+            "title": "Optimize data processing pipeline",
+            "columnId": "ba11e126-a4b8-4994-887f-f1273c03d1be"
+          },
+          {
+            "id": "7d8f231a-3e3c-4aa3-97c8-15e9252c2f77",
+            "title": "Create user acceptance test scripts",
+            "columnId": "ba11e126-a4b8-4994-887f-f1273c03d1be"
+          },
+          {
+            "id": "be2fa7c4-4f0b-44c1-9dd4-dc1971da3da3",
+            "title": "Integrate third-party analytics tool",
+            "columnId": "ba11e126-a4b8-4994-887f-f1273c03d1be"
+          },
+          {
+            "id": "43eb400f-f536-4b6e-9546-f7d8a6405f06",
+            "title": "Design and implement custom data visualizations",
+            "columnId": "ba11e126-a4b8-4994-887f-f1273c03d1be"
+          },
+          {
+            "id": "a54f8912-670e-4615-b1e5-e1b5f5b5f5bf",
+            "title": "Create automated testing suite",
+            "columnId": "ba11e126-a4b8-4994-887f-f1273c03d1be"
+          },
     ],
 };
 

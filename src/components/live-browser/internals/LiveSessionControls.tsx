@@ -1,8 +1,7 @@
 import { FC } from "react";
 import { FlexRow } from "../../common/flex";
 import { tokens } from "@fluentui/react-theme";
-import { InkingControls } from "./InkingControls";
-import { Button } from "@fluentui/react-components";
+import { LiveCanvasControls } from "./LiveCanvasControls";
 import { InkingManager } from "@microsoft/live-share-canvas";
 import { PresenceUser } from "../../../interfaces";
 import { DropdownInput } from "../../common/input";
@@ -16,14 +15,14 @@ interface ILiveSessionFloatingControlsProps {
     users: PresenceUser[];
 }
 
-export const LiveSessionFloatingControls: FC<
+export const LiveSessionControls: FC<
     ILiveSessionFloatingControlsProps
 > = ({ width, inkingManager, inkingActive, setInkingActive, users }) => {
     const [assignedToFilterId, setAssignedToFilterId] = useLiveAssignedToFilter();
     const options = [
         {
             id: "everyone",
-            displayText: "Everyone",
+            displayText: "Everyone's tasks",
         },
         ...users.map((user) => ({
             id: user.userId,
@@ -65,21 +64,12 @@ export const LiveSessionFloatingControls: FC<
                     onDidSelect={setAssignedToFilterId}
                 />
                 {inkingManager && (
-                    <InkingControls
+                    <LiveCanvasControls
                         inkingManager={inkingManager}
                         isEnabled={inkingActive}
                         setIsEnabled={setInkingActive}
                     />
                 )}
-                <Button
-                    appearance="subtle"
-                    size="small"
-                    onClick={() => {
-                        inkingManager?.clear();
-                    }}
-                >
-                    {"Clear"}
-                </Button>
             </FlexRow>
         </FlexRow>
     );

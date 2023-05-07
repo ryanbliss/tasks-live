@@ -10,20 +10,20 @@ import { tokens } from "@fluentui/react-theme";
 import { LiveScrollView } from "../../live-browser/internals";
 import { Subtitle2 } from "@fluentui/react-components";
 import { KanbanTask } from "./KanbanTask";
+import { useAppContext } from "../../../context";
 
 interface IKanbanColumnProps {
     board: IKanbanBoard;
     column: IKanbanColumn;
     setTask: (updatedTask: ITask) => void;
-    users: PresenceUser[];
 }
 
 export const KanbanColumn: FC<IKanbanColumnProps> = ({
     board,
     column,
     setTask,
-    users,
 }) => {
+    const { allUsers } = useAppContext();
     const tasks = board.tasks.filter((task) => task.columnId === column.id);
     return (
         <FlexColumn
@@ -60,7 +60,7 @@ export const KanbanColumn: FC<IKanbanColumnProps> = ({
                                 setTask={setTask}
                                 user={
                                     task.assignedToId
-                                        ? users.find(
+                                        ? allUsers.find(
                                               (user) =>
                                                   user.userId ===
                                                   task.assignedToId

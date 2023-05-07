@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useKanbanBoard } from "../../../hooks";
 import { Home24Filled } from "@fluentui/react-icons";
 import { LiveAvatars } from "./LiveAvatars";
+import { AppRoutes } from "../../../constants";
 
 export const LiveNavigationBar: FC = () => {
     const { boardId } = useParams<{ boardId?: string }>();
@@ -14,7 +15,7 @@ export const LiveNavigationBar: FC = () => {
     const { navigate } = useAppContext();
 
     const onNavigateHome = () => {
-        navigate("/teams/meeting/");
+        navigate(AppRoutes.teams.children.meeting.children.home);
     };
 
     return (
@@ -25,7 +26,7 @@ export const LiveNavigationBar: FC = () => {
             style={{
                 padding: "8px",
                 backgroundColor: tokens.colorNeutralBackground1,
-                boxShadow: "2px 2px 4px 0px rgba(0, 0, 0, 0.2)",
+                boxShadow: tokens.shadow4,
             }}
         >
             <FlexRow gap="small" vAlign="center">

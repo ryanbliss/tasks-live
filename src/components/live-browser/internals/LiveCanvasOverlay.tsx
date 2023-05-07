@@ -1,9 +1,8 @@
-import { useLiveCanvas, useLiveState } from "@microsoft/live-share-react";
-import { InkingTool, PointerInputProvider } from "@microsoft/live-share-canvas";
+import { useLiveCanvas } from "@microsoft/live-share-react";
+import { PointerInputProvider } from "@microsoft/live-share-canvas";
 import { FC, useRef, useEffect, MutableRefObject, useState } from "react";
 import { NonClickablePointerInputProvider } from "../../../utils";
-import { LOCAL_RANDOM_NAME } from "../../../constants";
-import { LiveSessionFloatingControls } from "./LiveSessionFloatingControls";
+import { LiveSessionControls } from "./LiveSessionControls";
 import { useAppContext } from "../../../context";
 
 interface ILiveCanvasOverlayProps {
@@ -24,7 +23,7 @@ export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
         undefined, // lineBrush. We don't change this in this sample.
         undefined, // offset. We don't change this in this sample.
         undefined, // scale. We don't change this in this sample, though it would be a good idea since users can zoom in/out on browser.
-        "topLeft", // referencePoint. We always have our app positioned in topLeft corner of screen.
+        undefined, // reference point, either center (default) or topLeft.
         true, // isCursorShared
     );
 
@@ -36,15 +35,14 @@ export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
         // This is because the `<canvas>` overlay is set to disable pointer events, so that users can still click below it.
         // By using the element that contains the page's content, we can get the cursor positions as the mouse moves while also allowing clicks underneath it.
         // The cursors and strokes from other users will still be rendered inside of the <canvas> element.
-        const inputProvider = inkingActive
+        inkingManager.inputProvider = inkingActive
             ? new PointerInputProvider(
                   canvasRef!.current!.getElementsByTagName("canvas")[0]
               )
             : new NonClickablePointerInputProvider(pointerElementRef.current);
-        inputProvider.activate();
-        inkingManager.inputProvider = inputProvider;
+        inkingManager.inputProvider.activate();
         return () => {
-            inputProvider.deactivate();
+            inkingManager.inputProvider.deactivate();
         };
     }, [inkingManager, pointerElementRef, inkingActive]);
 
@@ -63,7 +61,7 @@ export const LiveCanvasOverlay: FC<ILiveCanvasOverlayProps> = ({
                     backgroundColor: "transparent",
                 }}
             />
-            <LiveSessionFloatingControls
+            <LiveSessionControls
                 width={commonWidth}
                 inkingActive={inkingActive}
                 inkingManager={inkingManager}

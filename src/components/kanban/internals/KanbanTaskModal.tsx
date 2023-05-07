@@ -1,19 +1,22 @@
 import { FC, memo, useCallback } from "react";
-import { IKanbanBoard, ITask, PresenceUser } from "../../../interfaces";
+import { IKanbanBoard, ITask } from "../../../interfaces";
 import { ModalContainer } from "../../common/modal";
-import { AppRoutes, LOCAL_RANDOM_NAME } from "../../../constants";
+import { AppRoutes } from "../../../constants";
 import { DropdownInput } from "../../common/input";
-import { useLivePresence } from "@microsoft/live-share-react";
+import { useAppContext } from "../../../context";
+import { LiveTextInput } from "../../live-browser";
+import { FlexColumn } from "../../common";
 
 interface IKanbanTaskModalProps {
     task: ITask | undefined;
     board: IKanbanBoard;
     setTask: (task: ITask) => void;
-    users: PresenceUser[];
 }
 
 export const KanbanTaskModal: FC<IKanbanTaskModalProps> = memo(
-    ({ task, board, setTask, users }) => {
+    ({ task, board, setTask }) => {
+        const { allUsers } = useAppContext();
+
         const dismissRoute =
             `${AppRoutes.teams.children.meeting.children.board.base}`.replace(
                 ":boardId",
@@ -42,20 +45,27 @@ export const KanbanTaskModal: FC<IKanbanTaskModalProps> = memo(
                 </ModalContainer>
             );
         }
-        const options = users.map((user) => ({
+        const options = allUsers.map((user) => ({
             id: user.userId,
             displayText: user?.displayName ?? "",
         }));
         return (
             <ModalContainer dismissRoute={dismissRoute} title={task.title}>
-                <DropdownInput
-                    id="assign-to"
-                    label="Assign to"
-                    placeholder="Select a user..."
-                    value={task?.assignedToId}
-                    options={options}
-                    onDidSelect={onDidAssignTask}
-                />
+                <FlexColumn gap="small">
+                    <DropdownInput
+                        id="assign-to"
+                        label="Assign to"
+                        placeholder="Select a user..."
+                        value={task?.assignedToId}
+                        options={options}
+                        onDidSelect={onDidAssignTask}
+                    />
+                    <LiveTextInput
+                        uniqueKey={`board/${board.id}/tasks/${task.id}`}
+                        label="Status"
+                        placeholder="Enter a status..."
+                    />
+                </FlexColumn>
             </ModalContainer>
         );
     }
