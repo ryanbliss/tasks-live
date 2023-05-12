@@ -12,6 +12,7 @@ import debounce from "lodash.debounce";
 import { AppContextProvider } from "../../context";
 import { IUserData, PresenceUser } from "../../interfaces";
 import { PresenceState } from "@microsoft/live-share";
+import { LiveObjectKeys } from "../../constants/LiveObjectKeys";
 
 /**
  * Live browser that wraps any page within it to do things like synchronize scroll position and maintain a common viewport.
@@ -22,12 +23,9 @@ export const LiveBrowser: FC = () => {
     const navigate = useLiveNavigate();
 
     const { allUsers, localUser, updatePresence } = useLivePresence<IUserData>({
-        screenWidth: window.document.body.clientWidth,
-        screenHeight: window.document.body.clientHeight,
+        screenWidth: window.document.body.clientWidth, // initial screen width for local user
+        screenHeight: window.document.body.clientHeight, // initial screen height for local user
     });
-    // Calculates the lowest common denominator for screen widths & heights for all users in session.
-    // This helps us ensure that cursors, strokes, and scroll views are positioned correctly for all users.
-    const { commonWidth, commonHeight } = useCommonScreenSize(allUsers);
 
     // Effect to broadcast changes to local user's screen size whenever the window is resized.
     // That then updates the allUsers list, which causes `useCommonScreenSize` to refresh.
@@ -44,6 +42,10 @@ export const LiveBrowser: FC = () => {
             onResize.cancel();
         };
     }, [updatePresence]);
+
+    // Calculates the lowest common denominator for screen widths & heights for all users in session.
+    // This helps us ensure that cursors, strokes, and scroll views are positioned correctly for all users.
+    const { commonWidth, commonHeight } = useCommonScreenSize(allUsers);
 
     // If we have not yet joined the session container, we show a loading spinner
     if (!container) {
@@ -86,8 +88,8 @@ const useLiveNavigate = (): ((route: string) => void) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [remoteRoute, setRemoteRoute] = useLiveState<string>(
-        "ROUTE_KEY",
-        location.pathname
+        LiveObjectKeys.ROUTE, // unique string value for this useLiveState instance
+        location.pathname, // initial value
     );
 
     // When the remote route changes, navigate to that route locally

@@ -5,7 +5,8 @@ import { LiveCanvasControls } from "./LiveCanvasControls";
 import { InkingManager } from "@microsoft/live-share-canvas";
 import { PresenceUser } from "../../../interfaces";
 import { DropdownInput } from "../../common/input";
-import { useLiveAssignedToFilter } from "../../../hooks";
+import { useLiveState } from "@microsoft/live-share-react";
+import { ASSIGNED_TO_FILTER_DEFAULT, LiveObjectKeys } from "../../../constants";
 
 interface ILiveSessionFloatingControlsProps {
     width: number;
@@ -18,10 +19,13 @@ interface ILiveSessionFloatingControlsProps {
 export const LiveSessionControls: FC<
     ILiveSessionFloatingControlsProps
 > = ({ width, inkingManager, inkingActive, setInkingActive, users }) => {
-    const [assignedToFilterId, setAssignedToFilterId] = useLiveAssignedToFilter();
+    const [assignedToFilterId, setAssignedToFilterId] = useLiveState<string>(
+        LiveObjectKeys.ASSIGNED_TO_FILTER, // unique key for this useLiveState instance
+        ASSIGNED_TO_FILTER_DEFAULT, // default value
+    );
     const options = [
         {
-            id: "everyone",
+            id: ASSIGNED_TO_FILTER_DEFAULT,
             displayText: "Everyone's tasks",
         },
         ...users.map((user) => ({

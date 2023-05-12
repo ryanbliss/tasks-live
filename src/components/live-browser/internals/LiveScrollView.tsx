@@ -35,7 +35,7 @@ export const LiveScrollView: FC<ILiveScrollViewProps> = ({
         {
             scrollTop: 0,
             scrollLeft: 0,
-            timestamp: LiveShareClient.getTimestamp(),
+            timestamp: 0,
         }
     );
     // Wraps the remote scroll data into React.useRef, so it can easily be accessed in JS event listeners
