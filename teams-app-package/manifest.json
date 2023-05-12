@@ -39,7 +39,6 @@
     "validDomains": ["tasks-live.vercel.app"],
     "authorization": {
         "permissions": {
-            "orgWide": [],
             "resourceSpecific": [
                 {
                     "name": "MeetingStage.Write.Chat",
