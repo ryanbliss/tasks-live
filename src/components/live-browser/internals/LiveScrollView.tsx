@@ -1,7 +1,7 @@
 import { FC, ReactNode, CSSProperties, useRef, useEffect } from "react";
 import { FlexColumn, FlexItem, FlexRow } from "../../common/flex";
 import debounce from "lodash.debounce";
-import { useLiveState } from "@microsoft/live-share-react";
+import { useLiveShareContext, useLiveState } from "@microsoft/live-share-react";
 import { LiveShareClient } from "@microsoft/live-share";
 import { useAppContext } from "../../../context";
 import { useStateToRef } from "../../../hooks";
@@ -42,13 +42,15 @@ export const LiveScrollView: FC<ILiveScrollViewProps> = ({
     const remoteScrollDataRef = useStateToRef(remoteScrollData);
 
     const { localUser } = useAppContext();
+    const { timestampProvider } = useLiveShareContext();
 
     // Registers an event listener to scroll position changes and sets remoteScrollData if updated.
     // There is some logic in place that will prevent local scrolling if a remote user has scrolled recently, which helps reduce conflicts.
     useEffect(() => {
+        if (!timestampProvider) return;
         // Send the updated scroll position with a debounce to minimize events sent
         const sendScrollEvent = debounce((event: Event) => {
-            const timestamp = LiveShareClient.getTimestamp();
+            const timestamp = timestampProvider.getTimestamp();
             const scrollTop = (event.target as any)?.scrollTop;
             const scrollLeft = (event.target as any)?.scrollLeft;
             if (typeof scrollTop !== "number" || typeof scrollLeft !== "number")
@@ -61,7 +63,7 @@ export const LiveScrollView: FC<ILiveScrollViewProps> = ({
             });
         }, 25);
         const onScrollEvent = (event: Event) => {
-            const timestamp = LiveShareClient.getTimestamp();
+            const timestamp = timestampProvider.getTimestamp();
             // If the local user is trying to scroll on this view while another user has recently scrolled, we scroll back to the remote scroll position.
             if (
                 remoteScrollDataRef.current?.userId !== localUser?.userId &&
@@ -90,6 +92,7 @@ export const LiveScrollView: FC<ILiveScrollViewProps> = ({
         localUser?.userId,
         remoteScrollData?.userId,
         remoteScrollData?.timestamp,
+        timestampProvider,
         setRemoteScrollData,
     ]);
 

@@ -22,10 +22,13 @@ export const LiveBrowser: FC = () => {
     const { container } = useFluidObjectsContext();
     const navigate = useLiveNavigate();
 
-    const { allUsers, localUser, updatePresence } = useLivePresence<IUserData>({
-        screenWidth: window.document.body.clientWidth, // initial screen width for local user
-        screenHeight: window.document.body.clientHeight, // initial screen height for local user
-    });
+    const { allUsers, localUser, updatePresence } = useLivePresence<IUserData>(
+        LiveObjectKeys.PRESENCE,
+        {
+            screenWidth: window.document.body.clientWidth, // initial screen width for local user
+            screenHeight: window.document.body.clientHeight, // initial screen height for local user
+        }
+    );
 
     // Effect to broadcast changes to local user's screen size whenever the window is resized.
     // That then updates the allUsers list, which causes `useCommonScreenSize` to refresh.
@@ -89,7 +92,7 @@ const useLiveNavigate = (): ((route: string) => void) => {
     const navigate = useNavigate();
     const [remoteRoute, setRemoteRoute] = useLiveState<string>(
         LiveObjectKeys.ROUTE, // unique string value for this useLiveState instance
-        location.pathname, // initial value
+        location.pathname // initial value
     );
 
     // When the remote route changes, navigate to that route locally

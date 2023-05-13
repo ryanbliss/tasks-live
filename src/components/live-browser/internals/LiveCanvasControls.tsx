@@ -26,6 +26,11 @@ export const LiveCanvasControls: FC<InkingControlsProps> = ({
     const [selectedTool, setSelectedTool] = useState<InkingTool>(
         inkingManager.tool
     );
+    const resetToDefaultTool = () => {
+        // Laser pointer replaces the cursor behavior on hovering, so we reset to another tool.
+        // Clicks are disabled when isEnabled is false, so this isn't a big deal.
+        inkingManager.tool = InkingTool.pen;
+    }
     const onSelectTool = (tool: InkingTool) => {
         if (tool !== selectedTool) {
             inkingManager.tool = tool;
@@ -33,6 +38,7 @@ export const LiveCanvasControls: FC<InkingControlsProps> = ({
         }
         if (isEnabled && tool === selectedTool) {
             setIsEnabled(false);
+            resetToDefaultTool();
         } else {
             setIsEnabled(true);
         }
@@ -56,11 +62,7 @@ export const LiveCanvasControls: FC<InkingControlsProps> = ({
                 onClick={() => {
                     if (!isEnabled) return;
                     setIsEnabled(false);
-                    // Laser pointer replaces the cursor behavior on hovering, so we reset to another tool.
-                    // Clicks are disabled when isEnabled is false, so this isn't a big deal.
-                    if (selectedTool === InkingTool.laserPointer) {
-                        inkingManager.tool = InkingTool.pen;
-                    }
+                    resetToDefaultTool();
                 }}
             >
                 <Cursor24Filled />
