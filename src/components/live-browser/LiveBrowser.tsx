@@ -128,6 +128,7 @@ const useCommonScreenSize = (
         sortedWidthUsers.length > 0
             ? sortedWidthUsers[0].data?.screenWidth
             : window.document.body.clientWidth;
+            
     const sortedHeightUsers = [...onlineUsers].sort(
         (a, b) => (a.data?.screenHeight || 0) - (b.data?.screenHeight || 0)
     );

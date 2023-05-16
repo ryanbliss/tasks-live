@@ -12,9 +12,11 @@ interface ITextInputProps {
 
 export const TextInput: FC<ITextInputProps> = ({ id, label, placeholder, value, setValue }) => {
     const idVal = useId(id);
-    const onChange: InputProps["onChange"] = useCallback((_, data) => {
+    const onChange: InputProps["onChange"] = useCallback((event, data) => {
+        // update the state and reset the caret
         setValue(data.value);
     }, [setValue]);
+
     return (
         <FlexColumn>
             <Label htmlFor={idVal}>{label}</Label>
