@@ -1,6 +1,7 @@
 import { FC, useEffect, useRef } from "react";
-import { FlexColumn } from "../common/flex";
+import { FlexColumn } from "../common";
 import { Spinner, tokens } from "@fluentui/react-components";
+import { PresenceState } from "@microsoft/live-share";
 import {
     useFluidObjectsContext,
     useLivePresence,
@@ -11,7 +12,6 @@ import { LiveCanvasOverlay, LiveNavigationBar } from "./internals";
 import debounce from "lodash.debounce";
 import { AppContextProvider } from "../../context";
 import { IUserData, PresenceUser } from "../../interfaces";
-import { PresenceState } from "@microsoft/live-share";
 import { LiveObjectKeys } from "../../constants/LiveObjectKeys";
 
 /**
