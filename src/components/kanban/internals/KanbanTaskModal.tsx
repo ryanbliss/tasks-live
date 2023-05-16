@@ -61,7 +61,12 @@ export const KanbanTaskModal: FC<IKanbanTaskModalProps> = memo(
                         onDidSelect={onDidAssignTask}
                     />
                     <LiveTextInput
-                        uniqueKey={`board/${board.id}/tasks/${task.id}`}
+                        uniqueKey={`board/${board.id}/tasks/${task.id}/description`}
+                        label="Description"
+                        placeholder="Enter a description..."
+                    />
+                    <LiveTextInput
+                        uniqueKey={`board/${board.id}/tasks/${task.id}/status`}
                         label="Status"
                         placeholder="Enter a status..."
                     />
