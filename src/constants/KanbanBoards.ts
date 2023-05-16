@@ -152,7 +152,7 @@ const KANBAN_BOARD_1: IKanbanBoard = {
         },
         {
             id: "76e77d8d-9fcb-4d6e-a699-43d8d1debf36",
-            title: "Optimize rendering performance",
+            title: "Optimize button rendering performance",
             columnId: "3c228c74-2f5d-4a4e-a661-81a0e0cccb72",
         },
         {
@@ -222,7 +222,7 @@ const KANBAN_BOARD_1: IKanbanBoard = {
         },
         {
             id: "66b8c9c9-6f5c-4c38-bb5d-0475fbad4ef4",
-            title: "Optimize search algorithm",
+            title: "Optimize image rendering performance",
             columnId: "3c228c74-2f5d-4a4e-a661-81a0e0cccb72",
         },
         {
@@ -242,7 +242,7 @@ const KANBAN_BOARD_1: IKanbanBoard = {
         },
         {
             id: "e28fcb23-6db9-46d1-84b9-6e41c6b8d285",
-            title: "Optimize image loading speed",
+            title: "Optimize page rendering performance",
             columnId: "3c228c74-2f5d-4a4e-a661-81a0e0cccb72",
         },
         {
@@ -262,7 +262,7 @@ const KANBAN_BOARD_1: IKanbanBoard = {
         },
         {
             id: "ec121a5a-d81b-44f3-9cc9-19304ba37d81",
-            title: "Optimize page load times",
+            title: "Optimize video rendering performance",
             columnId: "3c228c74-2f5d-4a4e-a661-81a0e0cccb72",
         },
         {
