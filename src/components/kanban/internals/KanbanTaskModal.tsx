@@ -66,20 +66,20 @@ export const KanbanTaskModal: FC<IKanbanTaskModalProps> = memo(
             <ModalContainer dismissRoute={dismissRoute} title={task.title}>
                 <FlexColumn gap="small">
                     <DropdownInput
-                        id="assign-to"
-                        label="Assign to"
-                        placeholder="Select a user..."
-                        value={task?.assignedToId}
-                        options={userOptions}
-                        onDidSelect={onDidAssignTask}
-                    />
-                    <DropdownInput
                         id="column-assign"
                         label="Column"
                         placeholder="Select a column..."
                         value={task?.columnId}
                         options={columnOptions}
                         onDidSelect={onChangeTaskColumn}
+                    />
+                    <DropdownInput
+                        id="assign-to"
+                        label="Assign to"
+                        placeholder="Select a user..."
+                        value={task?.assignedToId}
+                        options={userOptions}
+                        onDidSelect={onDidAssignTask}
                     />
                     <LiveTextInput
                         uniqueKey={`board/${board.id}/tasks/${task.id}/description`}
