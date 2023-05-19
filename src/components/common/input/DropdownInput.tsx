@@ -34,7 +34,6 @@ export const DropdownInput: FC<IDropdownInputProps> = ({
             (option) => option.displayText === data.optionValue
         )?.id;
         if (!id) return;
-        console.log(id);
         onDidSelect(id);
     };
     const selectedOption = options.find((option) => option.id === value);
