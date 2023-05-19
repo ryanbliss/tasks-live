@@ -14,13 +14,11 @@ import { useAppContext } from "../../../context";
 interface IKanbanColumnProps {
     board: IKanbanBoard;
     column: IKanbanColumn;
-    setTask: (updatedTask: ITask) => void;
 }
 
 export const KanbanColumn: FC<IKanbanColumnProps> = ({
     board,
     column,
-    setTask,
 }) => {
     const { allUsers } = useAppContext();
     const tasks = board.tasks.filter((task) => task.columnId === column.id);
@@ -63,7 +61,6 @@ export const KanbanColumn: FC<IKanbanColumnProps> = ({
                                     key={task.id}
                                     board={board}
                                     task={task}
-                                    setTask={setTask}
                                     user={
                                         task.assignedToId
                                             ? allUsers.find(

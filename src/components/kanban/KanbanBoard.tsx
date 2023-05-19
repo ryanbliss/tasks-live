@@ -27,7 +27,6 @@ export const KanbanBoard: FC<IKanbanBoardProps> = memo(({ board }) => {
                         key={column.id}
                         board={liveBoard}
                         column={column}
-                        setTask={setTask}
                     />
                 ))}
             </FlexRow>

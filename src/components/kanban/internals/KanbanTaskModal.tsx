@@ -37,6 +37,15 @@ export const KanbanTaskModal: FC<IKanbanTaskModalProps> = memo(
             },
             [task, setTask]
         );
+        // Callback to reassign a task to a new column in the kanban board.
+        const onChangeTaskColumn = (columnId: string) => {
+            if (!task) return;
+            const newTask: ITask = {
+                ...task,
+                columnId: columnId,
+            };
+            setTask(newTask);
+        }
 
         if (!task) {
             return (
@@ -45,9 +54,13 @@ export const KanbanTaskModal: FC<IKanbanTaskModalProps> = memo(
                 </ModalContainer>
             );
         }
-        const options = allUsers.map((user) => ({
+        const userOptions = allUsers.map((user) => ({
             id: user.userId,
             displayText: user?.displayName ?? "",
+        }));
+        const columnOptions = board.columns.map((column) => ({
+            id: column.id,
+            displayText: column.title,
         }));
         return (
             <ModalContainer dismissRoute={dismissRoute} title={task.title}>
@@ -57,8 +70,16 @@ export const KanbanTaskModal: FC<IKanbanTaskModalProps> = memo(
                         label="Assign to"
                         placeholder="Select a user..."
                         value={task?.assignedToId}
-                        options={options}
+                        options={userOptions}
                         onDidSelect={onDidAssignTask}
+                    />
+                    <DropdownInput
+                        id="column-assign"
+                        label="Column"
+                        placeholder="Select a column..."
+                        value={task?.columnId}
+                        options={columnOptions}
+                        onDidSelect={onChangeTaskColumn}
                     />
                     <LiveTextInput
                         uniqueKey={`board/${board.id}/tasks/${task.id}/description`}
