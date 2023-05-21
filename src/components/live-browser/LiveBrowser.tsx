@@ -22,7 +22,7 @@ export const LiveBrowser: FC = () => {
     const { container } = useFluidObjectsContext();
     const navigate = useLiveNavigate();
 
-    const { allUsers, localUser, livePresence, updatePresence } = useLivePresence<IUserData>(
+    const { allUsers, localUser, updatePresence } = useLivePresence<IUserData>(
         LiveObjectKeys.PRESENCE,
         {
             screenWidth: window.document.body.clientWidth, // initial screen width for local user
@@ -33,7 +33,6 @@ export const LiveBrowser: FC = () => {
     // Effect to broadcast changes to local user's screen size whenever the window is resized.
     // That then updates the allUsers list, which causes `useCommonScreenSize` to refresh.
     useEffect(() => {
-        if (!livePresence?.isInitialized) return;
         const onResize = debounce((_: Event) => {
             updatePresence({
                 screenWidth: window.document.body.clientWidth,
@@ -46,7 +45,7 @@ export const LiveBrowser: FC = () => {
             window.removeEventListener("resize", onResize, true);
             onResize.cancel();
         };
-    }, [updatePresence, livePresence]);
+    }, [updatePresence]);
 
     // Calculates the lowest common denominator for screen widths & heights for all users in session.
     // This helps us ensure that cursors, strokes, and scroll views are positioned correctly for all users.
