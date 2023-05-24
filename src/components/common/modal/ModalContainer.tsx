@@ -7,17 +7,21 @@ import { DismissCircle24Filled } from "@fluentui/react-icons";
 
 interface IModalContainerProps {
     children?: ReactNode;
-    dismissRoute: string;
+    dismissRoute?: string;
+    onDidDismiss?: () => void;
     title?: string;
 }
 
 export const ModalContainer: FC<IModalContainerProps> = ({
     children,
     dismissRoute,
+    onDidDismiss,
     title,
 }) => {
     const { commonWidth, commonHeight, navigate } = useAppContext();
     const onDismiss = () => {
+        onDidDismiss?.();
+        if (!dismissRoute) return;
         navigate(dismissRoute);
     };
     return (
