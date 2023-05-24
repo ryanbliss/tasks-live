@@ -28,7 +28,6 @@ export const LiveAvatars: FC<ILiveAvatarsProps> = () => {
     // TODO: remove after demo
     useEffect(() => {
         const onKeyDown = (e: KeyboardEvent) => {  
-            e.preventDefault();
             if (e.ctrlKey && e.shiftKey && e.code === 'KeyY') {
                 setShowUserListModal(true);
             }
