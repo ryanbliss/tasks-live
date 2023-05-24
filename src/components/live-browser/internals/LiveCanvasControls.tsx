@@ -32,8 +32,8 @@ export const LiveCanvasControls: FC<InkingControlsProps> = ({
         inkingManager.tool = InkingTool.pen;
     }
     const onSelectTool = (tool: InkingTool) => {
+        inkingManager.tool = tool;
         if (tool !== selectedTool) {
-            inkingManager.tool = tool;
             setSelectedTool(tool);
         }
         if (isEnabled && tool === selectedTool) {
